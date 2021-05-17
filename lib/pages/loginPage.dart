@@ -6,7 +6,7 @@ import 'package:gift_generator/blocs/auth_bloc.dart';
 import 'package:gift_generator/pages/register.dart';
 import 'package:gift_generator/themeModel.dart';
 
-//import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
@@ -53,10 +53,10 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final authBloc = Provider.of<AuthBloc>(context);
     return Scaffold(
-      // appBar: GradientAppBar(
-      //     title: Text('Gift generator'),
-      //     gradient: LinearGradient(colors: [Color(0xff90B6EF), Color(0xff4B81C3)])
-      // ),
+      appBar: NewGradientAppBar(
+          title: Text('Gift generator'),
+          gradient: LinearGradient(colors: [Color(0xff90B6EF), Color(0xff4B81C3)])
+      ),
       body: Container(
         child: SingleChildScrollView(
           child: Column(
