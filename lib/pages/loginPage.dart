@@ -1,22 +1,27 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gift_generator/pages/home.dart';
+import 'package:gift_generator/blocs/auth_bloc.dart';
 import 'package:gift_generator/pages/register.dart';
 import 'package:gift_generator/themeModel.dart';
-import 'package:gradient_app_bar/gradient_app_bar.dart';
+
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import 'package:gift_generator/themeModel.dart';
 
+import 'home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
 
   @override
-  _MyStatefulLoginPageWidgetState createState() => _MyStatefulLoginPageWidgetState();
+  _MyStatefulLoginPageWidgetState createState() =>
+      _MyStatefulLoginPageWidgetState();
 }
 
 class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
+  StreamSubscription<User> loginStateSubscription;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isHidden = true;
 
@@ -27,9 +32,28 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
   }
 
   @override
+  void initState() {
+    var authBloc = Provider.of<AuthBloc>(context, listen: false);
+    loginStateSubscription = authBloc.currentUser.listen((fbuser) {
+      if (fbuser != null) {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => HomeScreen()));
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    loginStateSubscription.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final authBloc = Provider.of<AuthBloc>(context);
     return Scaffold(
-      appBar: GradientAppBar(
+      appBar: NewGradientAppBar(
           title: Text('Gift generator'),
           gradient: LinearGradient(colors: [Color(0xff90B6EF), Color(0xff4B81C3)])
       ),
@@ -79,9 +103,7 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                         suffix: InkWell(
                           onTap: _togglePasswordView,
                           child: Icon(
-                            _isHidden
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                            _isHidden ? Icons.visibility : Icons.visibility_off,
                             color: Colors.black54,
                             size: 21,
                           ),
@@ -109,17 +131,19 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                   Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16.0, horizontal: 20),
                         child: OutlineButton(
-                          padding: EdgeInsets.symmetric(horizontal: 55, vertical: 15),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 55, vertical: 15),
                           color: Color(0xff3D99DF),
                           focusColor: Color(0xff3D99DF),
                           textColor: Color(0xff3D99DF),
-                          shape: RoundedRectangleBorder(side: BorderSide(
-                              color: Color(0xff3D99DF),
-                              width: 1,
-                              style: BorderStyle.solid
-                          ),
+                          shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                  color: Color(0xff3D99DF),
+                                  width: 1,
+                                  style: BorderStyle.solid),
                               borderRadius: new BorderRadius.circular(10.0)),
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
@@ -132,17 +156,23 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: ElevatedButton(
-                          style : ElevatedButton.styleFrom(
-                              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                          style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 15),
                               primary: Color(0xff3D99DF),
-                              shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0))
-                          ),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      new BorderRadius.circular(10.0))),
                           onPressed: () {
                             /*Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => SecondRoute()),
                             );*/
-                            Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: SecondRoute()));
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.fade,
+                                    child: SecondRoute()));
                           },
                           child: const Text('РЕЄСТАРЦІЯ'),
                         ),
@@ -150,26 +180,27 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 20),
                     child: ElevatedButton(
-                      style : ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 15),
                           shadowColor: Colors.black,
                           primary: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0))
-                      ),
-                      child: Row(
-                          children : [
-                            Image.asset(
-                              "assets/google_light.png",
-                              height: 25,
-                            ),
-                            Text(
-                              'Авторизуватися через google',
-                              style: TextStyle(color: Colors.black54),
-                            ),
-                          ]
-                      ),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(10.0))),
+                      onPressed: () => authBloc.loginGoogle(),
+                      child: Row(children: [
+                        Image.asset(
+                          "assets/google_light.png",
+                          height: 25,
+                        ),
+                        Text(
+                          'Авторизуватися через google',
+                          style: TextStyle(color: Colors.black54),
+                        ),
+                      ]),
                     ),
                   ),
                 ],
