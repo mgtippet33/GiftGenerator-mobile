@@ -20,7 +20,6 @@ class AuthBloc {
       // Firebase Sign in
       final result = await authService.signInWithCredential(credential);
 
-      print('${result.user.displayName}');
 
     } catch (error) {
       print(error);
