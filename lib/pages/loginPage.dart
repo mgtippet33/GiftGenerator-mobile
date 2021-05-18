@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/blocs/auth_bloc.dart';
 import 'package:gift_generator/pages/register.dart';
+import 'package:gift_generator/pages/cabinet.dart';
 import 'package:gift_generator/themeModel.dart';
 
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
@@ -146,9 +147,16 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                                   style: BorderStyle.solid),
                               borderRadius: new BorderRadius.circular(10.0)),
                           onPressed: () {
-                            if (_formKey.currentState.validate()) {
-                              // Process data.
-                            }
+                            // if (_formKey.currentState.validate() || true) {
+                            //   // Process data.
+
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        type: PageTransitionType.fade,
+                                        child: Cabinet()));
+
+                            //}
                           },
                           child: const Text('ВХІД'),
                         ),
@@ -193,8 +201,8 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                       onPressed: () => authBloc.loginGoogle(),
                       child: Row(children: [
                         Image.asset(
-                          "assets/google_light.png",
-                          height: 25,
+                          "assets/google.png",
+                          height: 40,
                         ),
                         Text(
                           'Авторизуватися через google',
