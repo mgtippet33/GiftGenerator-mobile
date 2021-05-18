@@ -7,6 +7,10 @@ class Cabinet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: IconTitleWidget(),
+      ),
       //You should use `Scaffold` if you have `TextField` in body.
       //Otherwise on focus your `TextField` won`t scroll when keyboard popup.
       body: //SafeArea(child:
@@ -48,8 +52,8 @@ class Cabinet extends StatelessWidget {
             //Here you will get unexpected behaviour when keyboard pops-up.
             //So its better to use `bottomNavigationBar` to avoid this.
             Container(
-              padding: const EdgeInsets.all(8.0),
-              color: Colors.blue,
+              padding: const EdgeInsets.all(10),
+              color: Colors.white70,
               alignment: Alignment.center,
               child: Row(
                 mainAxisAlignment:  MainAxisAlignment.spaceEvenly,
@@ -78,11 +82,17 @@ class Cabinet extends StatelessWidget {
 
                   child:Image.asset("assets/present.png"),
                   ),
+                  SizedBox (
+                    width: 10,
+                  ),
                   InkWell(
                     onTap: ()=> Navigator.push(context,PageTransition(
                         type: PageTransitionType.fade,
                         child: NotificationPage())),
                     child:Image.asset("assets/notify.png"),
+                  ),
+                  SizedBox (
+                    width: 10,
                   ),
                   InkWell(
                     onTap: ()=> Navigator.push(context,PageTransition(
@@ -100,6 +110,37 @@ class Cabinet extends StatelessWidget {
           ],
         ),
       //),
+    );
+  }
+}
+class IconTitleWidget extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    imageCache.clear();
+    return Row (
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        InkWell(
+          // onTap: ()=> Navigator.push(context,PageTransition(
+          //     type: PageTransitionType.fade,
+          //     child: NotificationPage())),
+          child: Image.asset("assets/setting.png"),
+        ),
+        SizedBox (
+          width: 10,
+        ),
+        Text('Кабінет'),
+        SizedBox (
+          width: 10,
+        ),
+        InkWell(
+          // onTap: ()=> Navigator.push(context,PageTransition(
+          //     type: PageTransitionType.fade,
+          //     child: NotificationPage())),
+          child: Image.asset("assets/moon.png")
+        ),
+      ],
     );
   }
 }
