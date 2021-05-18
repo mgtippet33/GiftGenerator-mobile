@@ -180,7 +180,7 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                                 context,
                                 PageTransition(
                                     type: PageTransitionType.fade,
-                                    child: SecondRoute()));
+                                    child: Registration()));
                           },
                           child: const Text('РЕЄСТАРЦІЯ'),
                         ),
