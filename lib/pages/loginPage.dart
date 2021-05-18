@@ -55,7 +55,7 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
     final authBloc = Provider.of<AuthBloc>(context);
     return Scaffold(
       appBar: NewGradientAppBar(
-          title: Text('Gift generator'),
+          title: Text('Gift Generator'),
           gradient: LinearGradient(colors: [Color(0xff90B6EF), Color(0xff4B81C3)])
       ),
       body: Container(
