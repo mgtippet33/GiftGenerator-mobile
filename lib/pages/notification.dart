@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'navigation.dart';
+
 class NotificationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -75,7 +77,9 @@ class NotificationPage extends StatelessWidget {
               ),
             ),
           ],
-        ));
+        ),
+        bottomNavigationBar: NavigationBar(),
+    );
   }
 }
 
