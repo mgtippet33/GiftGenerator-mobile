@@ -182,9 +182,9 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                                     type: PageTransitionType.fade,
                                     child: SecondRoute()));
                           },
-                          child: const Text('РЕЄСТАРЦІЯ'),
+                          child: const Text('РЕЄСТРЦІЯ'),
                         ),
-                      )
+                      ),
                     ],
                   ),
                   Padding(
