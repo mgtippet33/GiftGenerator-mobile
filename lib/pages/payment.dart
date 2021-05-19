@@ -1,8 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:gift_generator/pages/cabinet.dart';
-import 'package:gift_generator/pages/loginPage.dart';
 import 'package:gift_generator/pages/navigation.dart';
+import 'package:gift_generator/pages/successPaymentPage.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -192,7 +191,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     ).then((token) {
                       setState(() {
                         Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => Cabinet()));
+                            MaterialPageRoute(builder: (context) => SuccessPaymentPage()));
                         _scaffoldKey.currentState.showSnackBar(SnackBar(
                             content: Text('Received ${token.tokenId}')));
                         _paymentToken = token;
