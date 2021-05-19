@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/pages/cabinet.dart';
 import 'package:gift_generator/pages/loginPage.dart';
+import 'package:gift_generator/pages/navigation.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -52,22 +53,29 @@ class _PaymentPageState extends State<PaymentPage> {
     });
   }
 
+  var navColor = Color(0xFFAFD9FA);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Оплата'),
-          centerTitle: true,
-        ),
-        body: ListView(
-          children: <Widget>[
-            Wrap(children: <Widget>[
-              Center(
+      appBar: AppBar(
+        title: Text('Оплата'),
+        backgroundColor: navColor,
+        centerTitle: true,
+      ),
+      body: ListView(
+        children: <Widget>[
+          Wrap(children: <Widget>[
+            Container(
+              child: Center(
                 child: SizedBox(
                   height: 30.0,
                 ),
               ),
-              Center(
+              color: navColor,
+            ),
+            Container(
+              child: Center(
                 child: Padding(
                   padding: EdgeInsets.only(top: 15.0),
                   child: Container(
@@ -103,90 +111,101 @@ class _PaymentPageState extends State<PaymentPage> {
                   ),
                 ),
               ),
-              Center(
+              color: navColor,
+            ),
+            Container(
+              child: Center(
                 child: SizedBox(
-                  height: 150,
+                  height: 50,
                 ),
               ),
-              Center(
-                child: Text(
-                  'До сплати 100 грн',
-                  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 21),
-                ),
+              color: navColor,
+            ),
+            Center(
+              child: SizedBox(
+                height: 70,
               ),
-              Center(
-                child: SizedBox(
-                  height: 120,
-                ),
+            ),
+            Center(
+              child: Text(
+                'До сплати 100 грн',
+                style: TextStyle(fontWeight: FontWeight.w300, fontSize: 21),
               ),
-              Center(
-                child: Text(
-                  'Без комісії',
-                  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15),
-                ),
+            ),
+            Center(
+              child: SizedBox(
+                height: 100,
               ),
-              Center(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 35),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                      shadowColor: Colors.black,
-                      primary: Color(0xFF000000),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(10.0)),
+            ),
+            Center(
+              child: Text(
+                'Без комісії',
+                style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15),
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 35),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                    shadowColor: Colors.black,
+                    primary: Color(0xFF000000),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(10.0)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 95),
+                    child: Row(
+                      children: [
+                        Image.asset('assets/google.png'),
+                        Text(
+                          'Pay',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFFFFFFFF),
+                              fontSize: 17),
+                        ),
+                      ],
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 100),
-                      child: Row(
-                        children: [
-                          Image.asset('assets/google.png'),
-                          Text(
-                            'Pay',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFFFFFFFF),
-                                fontSize: 17),
-                          ),
+                  ),
+                  onPressed: () {
+                    if (Platform.isIOS) {
+                      _controller.jumpTo(450);
+                    }
+                    StripePayment.paymentRequestWithNativePay(
+                      androidPayOptions: AndroidPayPaymentRequest(
+                        totalPrice: "0",
+                        currencyCode: "EUR",
+                      ),
+                      applePayOptions: ApplePayPaymentOptions(
+                        countryCode: 'DE',
+                        currencyCode: 'EUR',
+                        items: [
+                          ApplePayItem(
+                            label: 'Test',
+                            amount: '0',
+                          )
                         ],
                       ),
-                    ),
-                    onPressed: () {
-                      if (Platform.isIOS) {
-                        _controller.jumpTo(450);
-                      }
-                      StripePayment.paymentRequestWithNativePay(
-                        androidPayOptions: AndroidPayPaymentRequest(
-                          totalPrice: "0",
-                          currencyCode: "EUR",
-                        ),
-                        applePayOptions: ApplePayPaymentOptions(
-                          countryCode: 'DE',
-                          currencyCode: 'EUR',
-                          items: [
-                            ApplePayItem(
-                              label: 'Test',
-                              amount: '0',
-                            )
-                          ],
-                        ),
-                      ).then((token) {
-                        setState(() {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) => Cabinet()));
-                          _scaffoldKey.currentState.showSnackBar(SnackBar(
-                              content: Text('Received ${token.tokenId}')));
-                          _paymentToken = token;
-                        });
-                      }).catchError(setError);
-                    },
-                  ),
+                    ).then((token) {
+                      setState(() {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => Cabinet()));
+                        _scaffoldKey.currentState.showSnackBar(SnackBar(
+                            content: Text('Received ${token.tokenId}')));
+                        _paymentToken = token;
+                      });
+                    }).catchError(setError);
+                  },
                 ),
               ),
-            ])
-          ],
-        ));
+            ),
+          ])
+        ],
+      ),
+      bottomNavigationBar: NavigationBar(),
+    );
   }
 }
