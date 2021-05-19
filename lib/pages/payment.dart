@@ -5,7 +5,6 @@ import 'package:gift_generator/pages/successPaymentPage.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:stripe_payment/stripe_payment.dart';
 
 class PaymentPage extends StatefulWidget {
   @override
