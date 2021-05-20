@@ -14,7 +14,6 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   final GlobalKey<FormState> _profileKey = new GlobalKey();
   final GlobalKey<FormState> _passwordKey = new GlobalKey();
-  final GlobalKey<FormState> _passwordHideKey = GlobalKey<FormState>();
 
   var _nameController = TextEditingController();
   var _emailController = TextEditingController();
