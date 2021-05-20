@@ -281,16 +281,13 @@ class SettingAppBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        SizedBox(
-          width: 10,
-        ),
-        Text('Налаштування'),
-        SizedBox(
-          width: 10,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Text('Налаштування'),
         ),
         InkWell(
           // onTap: ()=> Navigator.push(context,PageTransition(
-          //     type: PageTransitionType.fade,
+          //     type: PageTrоansitionType.fade,
           //     child: NotificationPage())),
           child: Icon(Icons.nightlight_round,
               color: const Color(0xff6d6b6b), size: 30),
