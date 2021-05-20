@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gift_generator/services/validator.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class Registration extends StatefulWidget {
@@ -12,10 +13,13 @@ class Registration extends StatefulWidget {
 }
 
 class _RegisterPageWidgetState extends State<Registration> {
+  final GlobalKey<FormState> _formKey = new GlobalKey();
+
   bool _isHiddenPassword = true;
   bool _isHiddenPasswordConfirmation = true;
   bool isChecked = true;
   var _successfullyRegistered = "";
+  bool _errorPolicy = false;
 
   void _togglePasswordView() {
     setState(() {
@@ -48,7 +52,7 @@ class _RegisterPageWidgetState extends State<Registration> {
         centerTitle: true,
         title: Text("Registration"),
         gradient:
-        LinearGradient(colors: [Color(0xff90B6EF), Color(0xff4B81C3)]),
+            LinearGradient(colors: [Color(0xff90B6EF), Color(0xff4B81C3)]),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -69,154 +73,164 @@ class _RegisterPageWidgetState extends State<Registration> {
                   child: Image.asset("assets/logo.png"),
                 ),
               ),
-              Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20),
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: 'Електрона пошта',
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Електрона пошта',
+                        ),
+                        autofocus: false,
+                        validator: (value) =>
+                            FormValidator().validateEmail(value),
                       ),
-                      autofocus: false,
-                      validator: (String value) {
-                        if (value == null ||
-                            value.isEmpty ||
-                            value.length < 5) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'Пароль',
-                        suffix: InkWell(
-                          onTap: _togglePasswordView,
-                          child: Icon(
-                            _isHiddenPassword
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: Colors.black54,
-                            size: 21,
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          hintText: 'Пароль',
+                          suffix: InkWell(
+                            onTap: _togglePasswordView,
+                            child: Icon(
+                              _isHiddenPassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.black54,
+                              size: 21,
+                            ),
                           ),
                         ),
+                        obscureText: _isHiddenPassword,
+                        autofocus: false,
+                        validator: (value) =>
+                            FormValidator().validatePassword(value),
                       ),
-                      obscureText: _isHiddenPassword,
-                      autofocus: false,
-                      validator: (String value) {
-                        if (value == null ||
-                            value.isEmpty ||
-                            value.length < 5) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'Підтвердіть пароль',
-                        suffix: InkWell(
-                          onTap: _togglePasswordConfirmationView,
-                          child: Icon(
-                            _isHiddenPasswordConfirmation
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: Colors.black54,
-                            size: 21,
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          hintText: 'Підтвердіть пароль',
+                          suffix: InkWell(
+                            onTap: _togglePasswordConfirmationView,
+                            child: Icon(
+                              _isHiddenPasswordConfirmation
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.black54,
+                              size: 21,
+                            ),
                           ),
                         ),
+                        obscureText: _isHiddenPasswordConfirmation,
+                        autofocus: false,
+                        validator: (String value) {
+                          if (value.isEmpty || value.length == 0) {
+                            return 'Потрібен повторний пароль';
+                          }
+                          if (value != FormValidator().password) {
+                            return 'Паролі повинні бути однаковими';
+                          }
+                          return null;
+                        },
                       ),
-                      obscureText: _isHiddenPasswordConfirmation,
-                      autofocus: false,
-                      validator: (String value) {
-                        if (value == null ||
-                            value.isEmpty ||
-                            value.length < 5) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 20),
-                        child: Checkbox(
-                          checkColor: Colors.white,
-                          fillColor:
-                          MaterialStateProperty.resolveWith(getColor),
-                          value: isChecked,
-                          onChanged: (bool value) {
-                            setState(() {
-                              isChecked = !isChecked;
-                            });
-                          },
-                        ),
-                      ),
-                      Text(
-                        'Я ознайомлен(а) та погоджуюсь з',
-                        style: TextStyle(color: Colors.black54),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    'Політикою конфіденціальності',
-                    style: TextStyle(color: Colors.cyan),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          _successfullyRegistered = "ви успішно зареєстровані";
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 100, vertical: 15),
-                          primary: Color(0xff3D99DF),
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                              new BorderRadius.circular(10.0))),
-                      child: const Text('Зареєструватися'),
-                    ),
-                  ),
-                  Text(
-                    _successfullyRegistered,
-                    style: TextStyle(color: Colors.green),
-                  ),
-                  //TODO optional add logic for registration with google button
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 5.0, horizontal: 20),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 40, vertical: 15),
-                          shadowColor: Colors.black,
-                          primary: Colors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(10.0))),
-                      child: Row(children: [
-                        Image.asset(
-                          "assets/google.png",
-                          height: 40,
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Checkbox(
+                            checkColor: Colors.white,
+                            fillColor:
+                                MaterialStateProperty.resolveWith(getColor),
+                            value: isChecked,
+                            onChanged: (bool value) {
+                              setState(() {
+                                isChecked = !isChecked;
+                              });
+                            },
+                          ),
                         ),
                         Text(
-                          'Авторизуватися через google',
+                          'Я ознайомлен(а) та погоджуюсь з',
                           style: TextStyle(color: Colors.black54),
                         ),
-                      ]),
+                      ],
                     ),
-                  ),
-                ],
+                    Text(
+                      'Політикою конфіденціальності',
+                      style: TextStyle(color: Colors.cyan),
+                    ),
+                    _errorPolicy
+                        ? Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: Text(
+                              'Ознайомтеся і підтвердіть Політику конфіденційності',
+                              style: TextStyle(color: Colors.redAccent),
+                            ),
+                        )
+                        : Text(''),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState.validate()) {
+                            if (!isChecked) {
+                              setState(() {
+                                _errorPolicy = true;
+                              });
+                              return;
+                            }
+                            setState(() {
+                              _successfullyRegistered =
+                                  "Ви успішно зареєстровані";
+                              _errorPolicy = false;
+                            });
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 100, vertical: 15),
+                            primary: Color(0xff3D99DF),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(10.0))),
+                        child: const Text('Зареєструватися'),
+                      ),
+                    ),
+                    Text(
+                      _successfullyRegistered,
+                      style: TextStyle(color: Colors.green),
+                    ),
+                    //TODO optional add logic for registration with google button
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5.0, horizontal: 20),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 40, vertical: 15),
+                            shadowColor: Colors.black,
+                            primary: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(10.0))),
+                        child: Row(children: [
+                          Image.asset(
+                            "assets/google.png",
+                            height: 40,
+                          ),
+                          Text(
+                            'Авторизуватися через google',
+                            style: TextStyle(color: Colors.black54),
+                          ),
+                        ]),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
