@@ -1,21 +1,21 @@
 class User {
-  int ID;
+  String token;
   String name;
   String email;
   String password;
   bool premium;
   int theme;
 
-  User(this.ID, this.name, this.email, this.password, this.premium, this.theme);
+  User(this.token, this.name, this.email, this.password, this.premium, this.theme);
 
   Map<String,dynamic> toPost(){
     final paramDic = {
-      "id" : ID.toString(),
+      "id" : token,
       "name" : name,
       "email": email,
       "password": password,
-      "premium": premium,
-      "theme": theme
+      "premium": premium.toString(),
+      "theme": theme.toString()
     };
     return paramDic;
   }
