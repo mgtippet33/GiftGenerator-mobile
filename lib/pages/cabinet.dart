@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gift_generator/pages/notification.dart';
 import 'package:gift_generator/pages/find.dart';
+import 'package:gift_generator/pages/setting.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'navigation.dart';
@@ -28,9 +29,9 @@ class IconTitleWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         InkWell(
-          // onTap: ()=> Navigator.push(context,PageTransition(
-          //     type: PageTransitionType.fade,
-          //     child: NotificationPage())),
+          onTap: ()=> Navigator.push(context,PageTransition(
+              type: PageTransitionType.fade,
+              child: SettingPage())),
           child: Icon(Icons.settings, color: const Color(0xff6d6b6b), size: 30),
         ),
         SizedBox (
