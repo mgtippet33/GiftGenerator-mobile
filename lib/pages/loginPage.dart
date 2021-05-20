@@ -150,7 +150,7 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                                   borderRadius:
                                       new BorderRadius.circular(10.0)),
                               onPressed: () {
-                                if (_formKey.currentState.validate()) {
+                                // if (_formKey.currentState.validate()) {
                                   // Process data.
 
                                   Navigator.push(
@@ -158,7 +158,7 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                                       PageTransition(
                                           type: PageTransitionType.fade,
                                           child: Cabinet()));
-                                }
+                                // }
                               },
                               child: const Text('ВХІД'),
                             ),
