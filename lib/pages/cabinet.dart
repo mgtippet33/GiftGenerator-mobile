@@ -19,19 +19,19 @@ class Cabinet extends StatefulWidget {
 }
 
 class _CabinetState extends State<Cabinet> {
-  List _history = [];
+  List<UserHistoryModel> _history = List();
   final box = GetStorage('MyStorage');
 
   @override
   initState() {
-    if(box.read('isPremium') == null){
+    if (box.read('isPremium') == null) {
       box.write('isPremium', false);
     }
-    _history.add(UserHistoryModel('New year', "01/01", "music, gaming",
+    _history.add(new UserHistoryModel('New year', "01/01", "music, gaming",
         "https://bezkoder.com/dart-list/", "woman", 23));
-    _history.add(UserHistoryModel('Happy birthday', "01/01", "music",
+    _history.add(new UserHistoryModel('Happy birthday', "01/01", "music",
         "https://bezkoder.com/dart-list/", "woman", 23));
-    _history.add(UserHistoryModel(
+    _history.add(new UserHistoryModel(
         'New year 1',
         "01/02",
         "music, gaming, cooking",
@@ -64,7 +64,9 @@ class _CabinetState extends State<Cabinet> {
                         height: 90.0,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(50)),
-                          color: box.read('isPremium') == true ? Colors.deepOrangeAccent : Colors.white,
+                          color: box.read('isPremium') == true
+                              ? Colors.deepOrangeAccent
+                              : Colors.white,
                         ),
                         child: Image.asset("assets/account_img.png"),
                       ),
@@ -84,11 +86,12 @@ class _CabinetState extends State<Cabinet> {
                                   borderRadius:
                                       new BorderRadius.circular(10.0))),
                           onPressed: () => {
-                            if(box.read('isPremium') == false) {
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => PaymentPage()))
-                            }
+                            if (box.read('isPremium') == false)
+                              {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) => PaymentPage()))
+                              }
                           },
                           child: Row(children: [
                             Image.asset(
@@ -120,17 +123,20 @@ class _CabinetState extends State<Cabinet> {
                   ),
                 ),
               ),
+              ListView(
+                children: _getListElements(_history),
+              ),
               /*ListView.builder(
-                  itemCount: _history.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return HistoryBlock();
-                  },
+                itemCount: _history.length,
+                itemBuilder: (context, index) {
+                  return Text(_history[index].holidays);
+                },
               ),*/
-              HistoryBlock(),
+              /*HistoryBlock(),
               Padding(padding: EdgeInsets.only(bottom: 15)),
               HistoryBlock(),
               Padding(padding: EdgeInsets.only(bottom: 15)),
-              HistoryBlock(),
+              HistoryBlock(),*/
             ],
           ),
         ),
@@ -138,6 +144,15 @@ class _CabinetState extends State<Cabinet> {
       bottomNavigationBar: NavigationBar(),
     );
   }
+}
+
+List<Widget> _getListElements(List<UserHistoryModel> allNews) {
+  List<Widget> widgets = List();
+  for (var n in allNews) {
+    widgets.add(HistoryBlock());
+  }
+
+  return widgets;
 }
 
 class HistoryBlock extends StatelessWidget {
