@@ -10,7 +10,7 @@ class User {
 
   Map<String,dynamic> toPost(){
     final paramDic = {
-      "id" : token,
+      "token" : token,
       "name" : name,
       "email": email,
       "password": password,
@@ -22,7 +22,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json){
     return User(
-        json['id'],
+        json['token'],
         json['name'],
         json['email'],
         json['password'],

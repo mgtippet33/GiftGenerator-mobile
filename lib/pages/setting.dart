@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gift_generator/blocs/auth_bloc.dart';
 import 'package:gift_generator/pages/loginPage.dart';
 import 'package:gift_generator/services/validator.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 
 class SettingPage extends StatefulWidget {
@@ -32,6 +34,7 @@ class _SettingPageState extends State<SettingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final authBloc = Provider.of<AuthBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: SettingAppBar(),
@@ -263,10 +266,13 @@ class _SettingPageState extends State<SettingPage> {
             IconButton(
               icon: Icon(Icons.exit_to_app,
                   color: const Color(0xff000000), size: 30),
-              onPressed: () => Navigator.push(
-                  context,
-                  PageTransition(
-                      type: PageTransitionType.fade, child: LoginPage())),
+              onPressed: () {
+                authBloc.loginGoogle(context);
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade, child: LoginPage()));
+              },
             )
           ],
         ),
