@@ -11,8 +11,8 @@ class UserHandler {
     return instance;
   }
 
-  int getUserId() {
-    return _user.ID;
+  String getUserToken() {
+    return _user.token;
   }
 
   User getUser() {
