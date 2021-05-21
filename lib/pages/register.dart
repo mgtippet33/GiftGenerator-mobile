@@ -1,9 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gift_generator/api/api.dart';
+import 'package:gift_generator/models/User.dart';
+import 'package:gift_generator/pages/loginPage.dart';
 import 'package:gift_generator/services/validator.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:gift_generator/models/RegistrationData.dart';
 
 class Registration extends StatefulWidget {
   const Registration({Key key}) : super(key: key);
@@ -14,12 +19,14 @@ class Registration extends StatefulWidget {
 
 class _RegisterPageWidgetState extends State<Registration> {
   final GlobalKey<FormState> _formKey = new GlobalKey();
+  final RegistrationData _registrationData = RegistrationData();
 
   bool _isHiddenPassword = true;
   bool _isHiddenPasswordConfirmation = true;
   bool isChecked = true;
   var _successfullyRegistered = "";
   bool _errorPolicy = false;
+  var errorText = 'Ознайомтеся і підтвердіть Політику конфіденційності';
 
   void _togglePasswordView() {
     setState(() {
@@ -84,8 +91,11 @@ class _RegisterPageWidgetState extends State<Registration> {
                           hintText: 'Електрона пошта',
                         ),
                         autofocus: false,
-                        validator: (value) =>
+                        validator: (String value) =>
                             FormValidator().validateEmail(value),
+                        onSaved: (String value) {
+                          _registrationData.email = value;
+                        },
                       ),
                     ),
                     Padding(
@@ -137,6 +147,9 @@ class _RegisterPageWidgetState extends State<Registration> {
                           }
                           return null;
                         },
+                        onSaved: (String value) {
+                          _registrationData.password = value;
+                        },
                       ),
                     ),
                     Row(
@@ -169,7 +182,7 @@ class _RegisterPageWidgetState extends State<Registration> {
                         ? Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: Text(
-                              'Ознайомтеся і підтвердіть Політику конфіденційності',
+                              errorText,
                               style: TextStyle(color: Colors.redAccent),
                             ),
                         )
@@ -181,10 +194,12 @@ class _RegisterPageWidgetState extends State<Registration> {
                           if (_formKey.currentState.validate()) {
                             if (!isChecked) {
                               setState(() {
+                                errorText = 'Ознайомтеся і підтвердіть Політику конфіденційності';
                                 _errorPolicy = true;
                               });
                               return;
                             }
+                            register();
                             setState(() {
                               _successfullyRegistered =
                                   "Ви успішно зареєстровані";
@@ -238,4 +253,67 @@ class _RegisterPageWidgetState extends State<Registration> {
       ),
     );
   }
+
+  Future<Null> _showDialog(Text x) async {
+    await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            backgroundColor: Color(0xFFF8F8F8),
+            title: x,
+            contentPadding: EdgeInsets.all(5.0),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("Ok",
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600)),
+                onPressed: () async {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  register(){
+    _formKey.currentState.save();
+    User newUser = User(
+      "0",
+      _registrationData.name,
+      _registrationData.email,
+      _registrationData.password,
+      _registrationData.premium,
+      _registrationData.theme
+    );
+    ApiManager().simpleRegister(newUser).then((value) {
+      if(value.statusCode == 201) {
+        Text x = Text("You successfully registered",
+            style: TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+              color: Color(0xFF878787),
+            ));
+        _showDialog(x);
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => LoginPage()));
+        print("Success");
+      }
+      // TODO error
+      // else if(value.statusCode == 400) {
+      //   var data = json.encode(value.body);
+      //   print(data);
+      //   if(data[0][0] == "user with this email already exists.") {
+      //     errorText = 'Користувач з такими даними вже зареєстрован';
+      //   }
+      // }
+    });
+  }
 }
+
