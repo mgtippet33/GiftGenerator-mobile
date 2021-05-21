@@ -1,14 +1,16 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/api/api.dart';
+import 'package:gift_generator/blocs/auth_bloc.dart';
 import 'package:gift_generator/models/User.dart';
 import 'package:gift_generator/pages/loginPage.dart';
 import 'package:gift_generator/services/validator.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:gift_generator/models/RegistrationData.dart';
+import 'package:provider/provider.dart';
+
 
 class Registration extends StatefulWidget {
   const Registration({Key key}) : super(key: key);
@@ -24,9 +26,8 @@ class _RegisterPageWidgetState extends State<Registration> {
   bool _isHiddenPassword = true;
   bool _isHiddenPasswordConfirmation = true;
   bool isChecked = true;
-  var _successfullyRegistered = "";
   bool _errorPolicy = false;
-  var errorText = 'Ознайомтеся і підтвердіть Політику конфіденційності';
+
 
   void _togglePasswordView() {
     setState(() {
@@ -54,6 +55,7 @@ class _RegisterPageWidgetState extends State<Registration> {
 
   @override
   Widget build(BuildContext context) {
+    final authBloc = Provider.of<AuthBloc>(context);
     return Scaffold(
       appBar: NewGradientAppBar(
         centerTitle: true,
@@ -182,7 +184,7 @@ class _RegisterPageWidgetState extends State<Registration> {
                         ? Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: Text(
-                              errorText,
+                            'Ознайомтеся та підтвердіть Політику конфіденційності',
                               style: TextStyle(color: Colors.redAccent),
                             ),
                         )
@@ -194,15 +196,12 @@ class _RegisterPageWidgetState extends State<Registration> {
                           if (_formKey.currentState.validate()) {
                             if (!isChecked) {
                               setState(() {
-                                errorText = 'Ознайомтеся і підтвердіть Політику конфіденційності';
                                 _errorPolicy = true;
                               });
                               return;
                             }
                             register();
                             setState(() {
-                              _successfullyRegistered =
-                                  "Ви успішно зареєстровані";
                               _errorPolicy = false;
                             });
                           }
@@ -216,15 +215,12 @@ class _RegisterPageWidgetState extends State<Registration> {
                         child: const Text('Зареєструватися'),
                       ),
                     ),
-                    Text(
-                      _successfullyRegistered,
-                      style: TextStyle(color: Colors.green),
-                    ),
                     //TODO optional add logic for registration with google button
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 20),
                       child: ElevatedButton(
+                        onPressed: () => authBloc.signUpGoogle(context),
                         style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 40, vertical: 15),
@@ -238,7 +234,7 @@ class _RegisterPageWidgetState extends State<Registration> {
                             height: 40,
                           ),
                           Text(
-                            'Авторизуватися через google',
+                            'Зареєструватися через google',
                             style: TextStyle(color: Colors.black54),
                           ),
                         ]),
@@ -263,11 +259,11 @@ class _RegisterPageWidgetState extends State<Registration> {
               borderRadius: BorderRadius.circular(30),
             ),
             backgroundColor: Color(0xFFF8F8F8),
-            title: x,
+            title: Center(child: x),
             contentPadding: EdgeInsets.all(5.0),
             actions: <Widget>[
               new FlatButton(
-                child: new Text("Ok",
+                child: new Text("ОК",
                     style: TextStyle(
                         fontFamily: 'Roboto',
                         fontSize: 22,
@@ -284,35 +280,22 @@ class _RegisterPageWidgetState extends State<Registration> {
   register(){
     _formKey.currentState.save();
     User newUser = User(
-      "0",
-      _registrationData.name,
-      _registrationData.email,
-      _registrationData.password,
-      _registrationData.premium,
-      _registrationData.theme
+        "0",
+        _registrationData.name,
+        _registrationData.email,
+        _registrationData.password,
+        _registrationData.premium,
+        _registrationData.theme
     );
-    ApiManager().simpleRegister(newUser).then((value) {
-      if(value.statusCode == 201) {
-        Text x = Text("You successfully registered",
-            style: TextStyle(
-              fontFamily: 'Roboto',
-              fontSize: 14,
-              fontWeight: FontWeight.normal,
-              color: Color(0xFF878787),
-            ));
-        _showDialog(x);
+    ApiManager().register(newUser).then((value) {
+      if(value.statusCode == 200) {
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => LoginPage()));
-        print("Success");
+        _showDialog(Text("Ви успішно зареєстровані!", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),));
       }
-      // TODO error
-      // else if(value.statusCode == 400) {
-      //   var data = json.encode(value.body);
-      //   print(data);
-      //   if(data[0][0] == "user with this email already exists.") {
-      //     errorText = 'Користувач з такими даними вже зареєстрован';
-      //   }
-      // }
+      else if(value.statusCode == 400) {
+        _showDialog(Text("Користувач з такими даними вже зареєстрован!", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),));
+      }
     });
   }
 }
