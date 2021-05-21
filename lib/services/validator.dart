@@ -42,4 +42,29 @@ class FormValidator {
     }
     return null;
   }
+
+  String validateAge(String value){
+    String patttern = r'(^\d{1,3}$)';
+    RegExp regExp = new RegExp(patttern);
+    if (value.isEmpty) {
+      return "Потрібно ввести вік";
+    } else if (!regExp.hasMatch(value)) {
+      return "Введіть коректний вік";
+    } else {
+      return null;
+    }
+  }
+  String validateLink(String value){
+    String patttern1 = r'(^https:\/\/www.facebook.com\/+\/$)';
+    String patttern2 = r'(^https://twitter.com/+/$)';
+    RegExp regExp1 = new RegExp(patttern1);
+    RegExp regExp2 = new RegExp(patttern2);
+    if (value=="None" || value =="") {
+      return null;
+    } else if (!regExp1.hasMatch(value) || !regExp2.hasMatch(value)) {
+      return "Введіть коректне посилання";
+    } else {
+      return null;
+    }
+  }
 }
