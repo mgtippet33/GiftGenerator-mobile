@@ -31,6 +31,7 @@ dependencies:
   new_gradient_app_bar: ^0.2.0
   page_transition: ^2.0.2
   stripe_payment: ^1.1.0
+  http: ^0.13.3
 
 
   # The following adds the Cupertino Icons font to your application.
