@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/api/api.dart';
+import 'package:gift_generator/pages/cabinet.dart';
 import 'package:gift_generator/pages/loginPage.dart';
 import 'package:gift_generator/services/auth_service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -23,7 +24,12 @@ class AuthBloc {
 
       // Firebase Sign in
       final result = await authService.signInWithCredential(credential);
-
+      var response = await ApiManager().googleLogin(result.user.email);
+      if(response.statusCode == 200) {
+        print("Success login");
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => Cabinet()));
+      }
 
     } catch (error) {
       print(error);
@@ -52,7 +58,6 @@ class AuthBloc {
 
       final responce = await ApiManager().googleRegister(newUser);
       if (responce.statusCode == 200) {
-        print("success reg google");
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => LoginPage()));
         _showDialog(context, Text("Ви успішно зареєстровані!",
