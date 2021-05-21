@@ -5,8 +5,9 @@ class User {
   String password;
   bool premium;
   int theme;
+  bool googleSignIn;
 
-  User(this.token, this.name, this.email, this.password, this.premium, this.theme);
+  User(this.token, this.name, this.email, this.password, this.premium, this.theme, this.googleSignIn);
 
   Map<String,dynamic> toPost(){
     final paramDic = {
@@ -28,6 +29,7 @@ class User {
         json['password'],
         json['premium'],
         json['theme'],
+        json['googleSignIn']
     );
   }
 }
