@@ -2,8 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gift_generator/api/api.dart';
+import 'package:gift_generator/blocs/auth_bloc.dart';
+import 'package:gift_generator/models/User.dart';
+import 'package:gift_generator/pages/loginPage.dart';
 import 'package:gift_generator/services/validator.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:gift_generator/models/RegistrationData.dart';
+import 'package:provider/provider.dart';
+
 
 class Registration extends StatefulWidget {
   const Registration({Key key}) : super(key: key);
@@ -14,12 +21,13 @@ class Registration extends StatefulWidget {
 
 class _RegisterPageWidgetState extends State<Registration> {
   final GlobalKey<FormState> _formKey = new GlobalKey();
+  final RegistrationData _registrationData = RegistrationData();
 
   bool _isHiddenPassword = true;
   bool _isHiddenPasswordConfirmation = true;
   bool isChecked = true;
-  var _successfullyRegistered = "";
   bool _errorPolicy = false;
+
 
   void _togglePasswordView() {
     setState(() {
@@ -47,6 +55,7 @@ class _RegisterPageWidgetState extends State<Registration> {
 
   @override
   Widget build(BuildContext context) {
+    final authBloc = Provider.of<AuthBloc>(context);
     return Scaffold(
       appBar: NewGradientAppBar(
         centerTitle: true,
@@ -84,8 +93,11 @@ class _RegisterPageWidgetState extends State<Registration> {
                           hintText: 'Електрона пошта',
                         ),
                         autofocus: false,
-                        validator: (value) =>
+                        validator: (String value) =>
                             FormValidator().validateEmail(value),
+                        onSaved: (String value) {
+                          _registrationData.email = value;
+                        },
                       ),
                     ),
                     Padding(
@@ -137,6 +149,9 @@ class _RegisterPageWidgetState extends State<Registration> {
                           }
                           return null;
                         },
+                        onSaved: (String value) {
+                          _registrationData.password = value;
+                        },
                       ),
                     ),
                     Row(
@@ -169,7 +184,7 @@ class _RegisterPageWidgetState extends State<Registration> {
                         ? Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: Text(
-                              'Ознайомтеся і підтвердіть Політику конфіденційності',
+                            'Ознайомтеся та підтвердіть Політику конфіденційності',
                               style: TextStyle(color: Colors.redAccent),
                             ),
                         )
@@ -185,9 +200,8 @@ class _RegisterPageWidgetState extends State<Registration> {
                               });
                               return;
                             }
+                            register();
                             setState(() {
-                              _successfullyRegistered =
-                                  "Ви успішно зареєстровані";
                               _errorPolicy = false;
                             });
                           }
@@ -201,15 +215,12 @@ class _RegisterPageWidgetState extends State<Registration> {
                         child: const Text('Зареєструватися'),
                       ),
                     ),
-                    Text(
-                      _successfullyRegistered,
-                      style: TextStyle(color: Colors.green),
-                    ),
                     //TODO optional add logic for registration with google button
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 20),
                       child: ElevatedButton(
+                        onPressed: () => authBloc.loginGoogle(context),
                         style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 40, vertical: 15),
@@ -223,7 +234,7 @@ class _RegisterPageWidgetState extends State<Registration> {
                             height: 40,
                           ),
                           Text(
-                            'Авторизуватися через google',
+                            'Зареєструватися через google',
                             style: TextStyle(color: Colors.black54),
                           ),
                         ]),
@@ -238,4 +249,55 @@ class _RegisterPageWidgetState extends State<Registration> {
       ),
     );
   }
+
+  Future<Null> _showDialog(Text x) async {
+    await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            backgroundColor: Color(0xFFF8F8F8),
+            title: Center(child: x),
+            contentPadding: EdgeInsets.all(5.0),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("ОК",
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600)),
+                onPressed: () async {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  register(){
+    _formKey.currentState.save();
+    User newUser = User(
+        "0",
+        _registrationData.name,
+        _registrationData.email,
+        _registrationData.password,
+        _registrationData.premium,
+        _registrationData.theme,
+        _registrationData.googleSignIn,
+    );
+    ApiManager().register(newUser).then((value) {
+      if(value.statusCode == 200) {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => LoginPage()));
+        _showDialog(Text("Ви успішно зареєстровані!", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),));
+      }
+      else if(value.statusCode == 400) {
+        _showDialog(Text("Користувач з такими даними вже зареєстрован!", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),));
+      }
+    });
+  }
 }
+
