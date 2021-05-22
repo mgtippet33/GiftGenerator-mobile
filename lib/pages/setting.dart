@@ -141,7 +141,7 @@ class _SettingPageState extends State<SettingPage> {
                           },
                           style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 135, vertical: 15),
+                                  horizontal: 110, vertical: 15),
                               primary: Color(0xff3D99DF),
                               shape: RoundedRectangleBorder(
                                   borderRadius: new BorderRadius.circular(10.0))),
@@ -263,7 +263,7 @@ class _SettingPageState extends State<SettingPage> {
                           },
                           style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 90, vertical: 15),
+                                  horizontal: 60, vertical: 15),
                               primary: Color(0xff3D99DF),
                               shape: RoundedRectangleBorder(
                                   borderRadius: new BorderRadius.circular(10.0))),
