@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gift_generator/pages/firstFindPage.dart';
 import 'package:gift_generator/pages/navigation.dart';
+import 'package:gift_generator/pages/search/firstFindPage.dart';
 
 class deathPage extends StatefulWidget{
 

@@ -4,7 +4,7 @@ import 'package:gift_generator/api/api.dart';
 import 'package:gift_generator/models/User.dart';
 import 'package:gift_generator/models/UserHandler.dart';
 import 'package:gift_generator/pages/navigation.dart';
-import 'package:gift_generator/pages/successPaymentPage.dart';
+import 'package:gift_generator/pages/payment/successPaymentPage.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

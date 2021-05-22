@@ -2,15 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:gift_generator/api/api.dart';
+import 'package:gift_generator/models/User.dart';
 import 'package:gift_generator/models/UserHandler.dart';
-import 'package:gift_generator/pages/loginPage.dart';
-import 'package:gift_generator/pages/notification.dart';
-import 'package:gift_generator/pages/find.dart';
-import 'package:gift_generator/pages/setting.dart';
+import 'package:gift_generator/pages/authorization/loginPage.dart';
+import 'package:gift_generator/pages/search/find.dart';
+import 'package:gift_generator/pages/account/setting.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:gift_generator/models/User.dart';
-import 'navigation.dart';
+
+import '../navigation.dart';
 
 class Cabinet extends StatelessWidget {
   @override

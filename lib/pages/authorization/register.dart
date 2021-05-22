@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/api/api.dart';
 import 'package:gift_generator/blocs/auth_bloc.dart';
+import 'package:gift_generator/models/RegistrationData.dart';
 import 'package:gift_generator/models/User.dart';
-import 'package:gift_generator/pages/loginPage.dart';
+import 'package:gift_generator/pages/authorization/loginPage.dart';
 import 'package:gift_generator/services/validator.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
-import 'package:gift_generator/models/RegistrationData.dart';
 import 'package:provider/provider.dart';
 
 

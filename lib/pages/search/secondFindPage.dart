@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gift_generator/pages/navigation.dart';
-import 'package:gift_generator/pages/thirdFindPage.dart';
+import 'package:gift_generator/pages/search/thirdFindPage.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'firstFindPage.dart';

@@ -1,12 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/blocs/auth_bloc.dart';
-import 'package:gift_generator/pages/cabinet.dart';
-import 'package:provider/provider.dart';
-
-//pages imports
-import 'package:gift_generator/pages/loginPage.dart';
+import 'package:gift_generator/pages/account/cabinet.dart';
 import 'package:gift_generator/themeModel.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
