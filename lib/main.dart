@@ -13,7 +13,7 @@ void main() async {
   await GetStorage.init('MyStorage');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(ChangeNotifierProvider(
+  runApp(ChangeNotifierProvider<ThemeModel>(
     create: (BuildContext context) => ThemeModel(),
     child: MyApp(),
   ));
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       create: (context) => AuthBloc(),
       child: MaterialApp(
         title: 'Flutter Demo',
-        theme: Provider.of<ThemeModel>(context).currentTheme,
+        theme: Provider.of<ThemeModel>(context, listen: false).currentTheme,
         home: LoginPage(),
       ),
     );

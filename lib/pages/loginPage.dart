@@ -7,8 +7,7 @@ import 'package:gift_generator/pages/register.dart';
 import 'package:gift_generator/pages/cabinet.dart';
 import 'package:gift_generator/themeModel.dart';
 
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import 'home.dart';
@@ -220,7 +219,7 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                     child: RaisedButton(
                         child: Text("Change Theme"),
                         onPressed: () {
-                          Provider.of<ThemeModel>(context).toggleTheme();
+                          Provider.of<ThemeModel>(context, listen: false).toggleTheme();
                         }),
                   ),
                 ],

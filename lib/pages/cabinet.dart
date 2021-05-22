@@ -24,6 +24,7 @@ class _CabinetState extends State<Cabinet> {
 
   @override
   initState() {
+    box.write('isPremium', false);
     if (box.read('isPremium') == null) {
       box.write('isPremium', false);
     }
@@ -123,20 +124,20 @@ class _CabinetState extends State<Cabinet> {
                   ),
                 ),
               ),
-              ListView(
+              /* ListView(
                 children: _getListElements(_history),
-              ),
+              ),*/
               /*ListView.builder(
                 itemCount: _history.length,
                 itemBuilder: (context, index) {
                   return Text(_history[index].holidays);
                 },
               ),*/
-              /*HistoryBlock(),
+              HistoryBlock(),
               Padding(padding: EdgeInsets.only(bottom: 15)),
               HistoryBlock(),
               Padding(padding: EdgeInsets.only(bottom: 15)),
-              HistoryBlock(),*/
+              HistoryBlock(),
             ],
           ),
         ),
@@ -257,9 +258,10 @@ class IconTitleWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         InkWell(
-          onTap: ()=> Navigator.push(context,PageTransition(
-              type: PageTransitionType.fade,
-              child: SettingPage())),
+          onTap: () => Navigator.push(
+              context,
+              PageTransition(
+                  type: PageTransitionType.fade, child: SettingPage())),
           child: Icon(Icons.settings, color: const Color(0xff6d6b6b), size: 30),
         ),
         SizedBox(
@@ -271,7 +273,12 @@ class IconTitleWidget extends StatelessWidget {
         ),
         InkWell(
           onTap: () => {
-            Provider.of<ThemeModel>(context).toggleTheme()
+            if (GetStorage('MyStorage').read('isPremium') == true)
+              {Provider.of<ThemeModel>(context, listen: false).toggleTheme()}
+            else
+              {
+              //_showDialog(Text("Користувач з такими даними вже зареєстрован!", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),));
+              }
             //TODO fix theme changer
           },
           child: Icon(Icons.nightlight_round,
