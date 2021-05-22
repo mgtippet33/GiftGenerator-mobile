@@ -68,4 +68,13 @@ class ApiManager {
         body: {'email': email, 'password': password});
     return responce;
   }
+
+  Future<http.Response> setPremium(
+      String token, String email) async {
+    var url = Uri.parse(urls.ApiConstants.changeUser_url);
+    final responce = await http.post(url,
+        headers: {'Authorization': 'Bearer $token'},
+        body: {'email': email, 'premium': "1"});
+    return responce;
+  }
 }
