@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/blocs/auth_bloc.dart';
 import 'package:gift_generator/pages/register.dart';
-import 'package:gift_generator/pages/cabinet.dart';
+import 'file:///D:/Flutter/gift_generator/lib/pages/UserAccount/cabinet.dart';
 import 'package:gift_generator/themeModel.dart';
 
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';import 'package:page_transition/page_transition.dart';

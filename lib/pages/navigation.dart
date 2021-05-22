@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gift_generator/pages/cabinet.dart';
+import 'file:///D:/Flutter/gift_generator/lib/pages/UserAccount/cabinet.dart';
 import 'package:gift_generator/pages/find.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:gift_generator/pages/notification.dart';
+import 'package:page_transition/page_transition.dart';
 
-import 'notification.dart';
+
 
 class NavigationBar extends  StatelessWidget{
   Widget build(BuildContext context) {

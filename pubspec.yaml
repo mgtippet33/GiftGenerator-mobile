@@ -30,6 +30,7 @@ dependencies:
   provider: ^5.0.0
   new_gradient_app_bar: ^0.2.0
   page_transition: ^2.0.2
+  image_picker:
   stripe_payment: ^1.1.0
   shared_preferences:
   get_storage:
