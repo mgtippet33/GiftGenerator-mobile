@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:gift_generator/models/Gift.dart';
+import 'package:gift_generator/models/Interest.dart';
 import 'package:gift_generator/models/User.dart';
 import 'package:http/http.dart' as http;
 
@@ -78,5 +81,26 @@ class ApiManager {
         headers: {'Authorization': 'Bearer $token'},
         body: {'email': email, 'premium': "1"});
     return responce;
+  }
+
+  Future<List<Gift>> searchGifts(String email, String gender, int age, String link,
+      String holiday, String interests) async {
+    List<Gift> content = null;
+    var url = Uri.parse(urls.ApiConstants.searchGifts_url);
+    Map<String, dynamic> searchData = {
+      "email": email,
+      "gender": gender,
+      "age": age.toString(),
+      "link": link != null? link : "null",
+      "holiday": holiday,
+      "interests": interests != null ? interests: "null"
+    };
+    final responce = await http.post(url, body: searchData);
+    if (responce.statusCode == 200) {
+      var data = json.decode(responce.body);
+      var searchData = data["data"] as List;
+      content = searchData.map<Gift>((json) => Gift.fromJson(json)).toList();
+    }
+    return content;
   }
 }
