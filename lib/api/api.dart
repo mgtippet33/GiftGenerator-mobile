@@ -26,19 +26,14 @@ class ApiManager {
 
   Future<http.Response> signIn(String email, String password) async {
     var url = Uri.parse(urls.ApiConstants.login_url);
-    Map<String, dynamic> responceBody = {
-      "email": email,
-      "password": password
-    };
+    Map<String, dynamic> responceBody = {"email": email, "password": password};
     var responce = await http.post(url, body: responceBody);
     return responce;
   }
 
   Future<http.Response> googleLogin(String email) async {
     var url = Uri.parse(urls.ApiConstants.login_url);
-    Map<String, dynamic> responceBody = {
-      "email": email
-    };
+    Map<String, dynamic> responceBody = {"email": email};
     var responce = await http.post(url, body: responceBody);
     return responce;
   }
@@ -48,6 +43,29 @@ class ApiManager {
     final responce = await http.get(url, headers: {
       'Authorization': 'Bearer $token',
     });
+    return responce;
+  }
+
+  Future<http.Response> changeUser(
+      String token, String oldEmail, String newEmail, String name) async {
+    var url = Uri.parse(urls.ApiConstants.changeUser_url);
+    Map<String, String> body;
+    if (oldEmail == newEmail) {
+      body = {'email': newEmail, 'name': name};
+    } else {
+      body = {'email': oldEmail, 'new_email': newEmail, 'name': name};
+    }
+    final responce = await http.post(url,
+        headers: {'Authorization': 'Bearer $token'}, body: body);
+    return responce;
+  }
+
+  Future<http.Response> changePassword(
+      String token, String email, String password) async {
+    var url = Uri.parse(urls.ApiConstants.changeUser_url);
+    final responce = await http.post(url,
+        headers: {'Authorization': 'Bearer $token'},
+        body: {'email': email, 'password': password});
     return responce;
   }
 }
