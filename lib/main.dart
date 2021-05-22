@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/blocs/auth_bloc.dart';
-import 'package:gift_generator/pages/notification.dart';
+import 'package:gift_generator/pages/cabinet.dart';
 import 'package:provider/provider.dart';
 
 //pages imports
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: Provider.of<ThemeModel>(context).currentTheme,
-        home: LoginPage(),
+        home: Cabinet(),
       ),
     );
   }
