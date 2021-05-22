@@ -220,7 +220,7 @@ class _RegisterPageWidgetState extends State<Registration> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 20),
                       child: ElevatedButton(
-                        onPressed: () => authBloc.signUpGoogle(context),
+                        onPressed: () => authBloc.loginGoogle(context),
                         style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 40, vertical: 15),
@@ -285,7 +285,8 @@ class _RegisterPageWidgetState extends State<Registration> {
         _registrationData.email,
         _registrationData.password,
         _registrationData.premium,
-        _registrationData.theme
+        _registrationData.theme,
+        _registrationData.googleSignIn,
     );
     ApiManager().register(newUser).then((value) {
       if(value.statusCode == 200) {
