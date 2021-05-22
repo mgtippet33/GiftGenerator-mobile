@@ -199,11 +199,6 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                                         });
                                       });
                                     }
-                                    Navigator.push(
-                                        context,
-                                        PageTransition(
-                                            type: PageTransitionType.fade,
-                                            child: Cabinet()));
                                   },
                                   child: const Text('ВХІД'),
                                 ),

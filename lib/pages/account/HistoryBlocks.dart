@@ -11,6 +11,18 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
   bool isSecondOpen = false;
 
   @override
+  void setState(fn) {
+    // TODO: implement setState
+    super.setState(fn);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -95,7 +107,9 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                                       vertical: 0, horizontal: 0),
                                   elevation: 0,
                                 ),
-                                onPressed: () => {isFirstOpen = !isFirstOpen},
+                                onPressed: () => {
+                                  setState(() => isFirstOpen = !isFirstOpen)
+                                },
                                 child: Container(
                                     child: Image.asset(
                                   "assets/bottom_arrow.png",
@@ -227,7 +241,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                                       vertical: 0, horizontal: 0),
                                   elevation: 0,
                                 ),
-                                onPressed: () => {isFirstOpen = !isFirstOpen},
+                                onPressed: () => setState(() => isFirstOpen = !isFirstOpen),
                                 child: Container(
                                     child: Image.asset(
                                   "assets/bottom_arrow.png",
@@ -321,7 +335,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                                       vertical: 0, horizontal: 0),
                                   elevation: 0,
                                 ),
-                                onPressed: () => {isSecondOpen = !isSecondOpen},
+                                onPressed: () => setState(() => isSecondOpen = !isSecondOpen),
                                 child: Container(
                                     child: Image.asset(
                                   "assets/bottom_arrow.png",
@@ -421,7 +435,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                                       vertical: 0, horizontal: 0),
                                   elevation: 0,
                                 ),
-                                onPressed: () => {isSecondOpen = !isSecondOpen},
+                                onPressed: () => setState(() => isSecondOpen = !isSecondOpen),
                                 child: Container(
                                     child: Image.asset(
                                   "assets/bottom_arrow.png",

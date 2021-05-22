@@ -13,6 +13,7 @@ import 'package:gift_generator/pages/payment/payment.dart';
 import 'package:gift_generator/pages/search/find.dart';
 import 'package:gift_generator/pages/account/setting.dart';
 import 'package:image_picker/image_picker.dart';
+
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,17 +25,20 @@ class Cabinet extends StatefulWidget {
 }
 
 class _CabinetState extends State<Cabinet> {
+  final User _user = UserHandler.instance.getUser();
   List<UserHistoryModel> _history = List();
   final box = GetStorage('MyStorage');
   File _image;
   final picker = ImagePicker();
 
-  Future getImage() async {
+
+  Future<File> getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
+        print(_image.toString());
       } else {
         print('No image selected.');
       }
@@ -90,11 +94,11 @@ class _CabinetState extends State<Cabinet> {
                         ),
                         child: _image == null
                             ? Image.asset("assets/account_img.png")
-                            : _image,
+                            : Image.file(_image),
                       ),
                     ),
                     Column(children: [
-                      Text('User name'),
+                      Text(_user.name, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18) ,),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 16.0, horizontal: 22),
@@ -141,7 +145,7 @@ class _CabinetState extends State<Cabinet> {
                     primary: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(50.0))),
-                onPressed: () => {getImage},
+                onPressed: () => getImage(),
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: 30),
