@@ -1,6 +1,8 @@
 import 'dart:async';
-import 'package:http/http.dart' as http;
+
 import 'package:gift_generator/models/User.dart';
+import 'package:http/http.dart' as http;
+
 import '../constants/ApiConstants/apiConstants.dart' as urls;
 
 class ApiManager {

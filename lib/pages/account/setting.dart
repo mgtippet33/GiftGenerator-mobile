@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/api/api.dart';
 import 'package:gift_generator/blocs/auth_bloc.dart';
+import 'package:gift_generator/models/User.dart' as myUser;
 import 'package:gift_generator/models/UserHandler.dart';
-import 'package:gift_generator/pages/loginPage.dart';
+import 'package:gift_generator/pages/authorization/loginPage.dart';
 import 'package:gift_generator/services/validator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:gift_generator/models/User.dart' as myUser;
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key key}) : super(key: key);

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gift_generator/pages/firstFindPage.dart';
-import 'navigation.dart';
+import 'package:gift_generator/pages/search/firstFindPage.dart';
 
 class Find extends StatelessWidget {
   @override

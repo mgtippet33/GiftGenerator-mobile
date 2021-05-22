@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../navigation.dart';
 import 'firstFindPage.dart';
-import 'navigation.dart';
 
 class resultPage extends StatefulWidget{
   var list ;

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/pages/navigation.dart';
-import 'package:gift_generator/pages/secondFindPage.dart';
+import 'package:gift_generator/pages/search/secondFindPage.dart';
 import 'package:gift_generator/services/validator.dart';
 import 'package:page_transition/page_transition.dart';
 

@@ -3,12 +3,11 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/api/api.dart';
+import 'package:gift_generator/models/User.dart' as myUser;
 import 'package:gift_generator/models/UserHandler.dart';
-import 'package:gift_generator/pages/cabinet.dart';
-import 'package:gift_generator/pages/loginPage.dart';
+import 'package:gift_generator/pages/account/cabinet.dart';
 import 'package:gift_generator/services/auth_service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:gift_generator/models/User.dart' as myUser;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthBloc {
