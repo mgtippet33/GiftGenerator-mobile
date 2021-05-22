@@ -37,7 +37,7 @@ class FormValidator {
   String validateName(String value) {
     if (value.isEmpty) {
       return "Потрібно вказати ім’я";
-    } else if (value.length < 4) {
+    } else if (value.length < 2) {
       return "Ім\'я має містити не менше двох символів";
     }
     return null;
