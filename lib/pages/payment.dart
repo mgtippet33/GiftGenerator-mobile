@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:gift_generator/api/api.dart';
+import 'package:gift_generator/models/User.dart';
+import 'package:gift_generator/models/UserHandler.dart';
 import 'package:gift_generator/pages/navigation.dart';
 import 'package:gift_generator/pages/successPaymentPage.dart';
 import 'package:stripe_payment/stripe_payment.dart';
@@ -12,6 +15,7 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
+  final User _user = UserHandler.instance.getUser();
   Token _paymentToken;
   PaymentMethod _paymentMethod;
   String _error;
@@ -189,8 +193,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       ),
                     ).then((token) {
                       setState(() {
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => SuccessPaymentPage()));
+                        setPremium(_user);
                         _scaffoldKey.currentState.showSnackBar(SnackBar(
                             content: Text('Received ${token.tokenId}')));
                         _paymentToken = token;
@@ -205,5 +208,26 @@ class _PaymentPageState extends State<PaymentPage> {
       ),
       bottomNavigationBar: NavigationBar(),
     );
+  }
+
+  setPremium(User user){
+    ApiManager().setPremium(user.token, user.email).then((value) {
+      if(value.statusCode == 200) {
+        user.premium = true;
+        UserHandler.instance.setUser(user);
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => SuccessPaymentPage()));
+      }
+      else{
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(
+            content: Text(
+              "Сталася помилка оплати. Спробуйте пізніше!",
+              style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500),
+            )));
+      }
+    });
   }
 }
