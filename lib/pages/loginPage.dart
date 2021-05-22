@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/blocs/auth_bloc.dart';
-import 'package:gift_generator/pages/register.dart';
-import 'file:///D:/Flutter/gift_generator/lib/pages/UserAccount/cabinet.dart';
+import 'package:gift_generator/pages/account/cabinet.dart';
+import 'package:gift_generator/pages/authorization//register.dart';
 import 'package:gift_generator/themeModel.dart';
 
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';import 'package:page_transition/page_transition.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import 'home.dart';
@@ -200,7 +201,7 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                               shape: RoundedRectangleBorder(
                                   borderRadius:
                                       new BorderRadius.circular(10.0))),
-                          onPressed: () => authBloc.loginGoogle(),
+                          onPressed: () => authBloc.loginGoogle(context),
                           child: Row(children: [
                             Image.asset(
                               "assets/google.png",

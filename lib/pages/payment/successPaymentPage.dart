@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'UserAccount/cabinet.dart';
+import '../account/cabinet.dart';
 
 class SuccessPaymentPage extends StatefulWidget {
   @override

@@ -8,7 +8,7 @@ import 'package:flutter_signin_button/button_view.dart';
 import 'package:gift_generator/blocs/auth_bloc.dart';
 import 'package:provider/provider.dart';
 
-import 'loginPage.dart';
+import 'authorization/loginPage.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);

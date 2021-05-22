@@ -1,15 +1,21 @@
+import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:gift_generator/api/api.dart';
+import 'package:gift_generator/models/User.dart';
+import 'package:gift_generator/models/UserHandler.dart';
 import 'package:gift_generator/models/UserHistoryModel.dart';
-import 'package:gift_generator/pages/UserAccount/HistoryBlocks.dart';
-import 'package:gift_generator/pages/payment.dart';
-import 'package:gift_generator/pages/setting.dart';
+import 'package:gift_generator/pages/account/HistoryBlocks.dart';
+import 'package:gift_generator/pages/authorization/loginPage.dart';
+import 'package:gift_generator/pages/payment/payment.dart';
+import 'package:gift_generator/pages/search/find.dart';
+import 'package:gift_generator/pages/account/setting.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../themeModel.dart';
 import '../navigation.dart';
 
 class Cabinet extends StatefulWidget {
@@ -56,6 +62,7 @@ class _CabinetState extends State<Cabinet> {
 
   @override
   Widget build(BuildContext context) {
+    _checkUser(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -157,6 +164,34 @@ class _CabinetState extends State<Cabinet> {
       bottomNavigationBar: NavigationBar(),
     );
   }
+
+  _checkUser(BuildContext context) {
+    if (UserHandler.instance.getUser() == null) {
+      SharedPreferences.getInstance().then((prefs) {
+        var userToken = prefs.getString('userToken');
+        if (userToken == null)
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => LoginPage()));
+        else {
+          ApiManager().getUser(userToken).then((value) {
+            if (value.statusCode == 200) {
+              var data = json.decode(value.body);
+              var userData = data["data"][0];
+              userData["token"] = userToken;
+              userData["email"] = prefs.getString('email');
+              userData["googleSignIn"] = prefs.getBool('googleSignIn');
+              User user = User.fromJson(userData);
+              print(user.name);
+              UserHandler(user);
+            } else {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => LoginPage()));
+            }
+          });
+        }
+      });
+    }
+  }
 }
 
 class IconTitleWidget extends StatelessWidget {
@@ -181,8 +216,9 @@ class IconTitleWidget extends StatelessWidget {
           width: 10,
         ),
         InkWell(
-          onTap: () =>
-              {Provider.of<ThemeModel>(context, listen: false).toggleTheme()},
+          // onTap: ()=> Navigator.push(context,PageTransition(
+          //     type: PageTransitionType.fade,
+          //     child: NotificationPage())),
           child: Icon(Icons.nightlight_round,
               color: const Color(0xff6d6b6b), size: 30),
         ),
