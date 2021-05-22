@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/pages/navigation.dart';
+import 'package:gift_generator/pages/resultFindPage.dart';
 import 'package:gift_generator/pages/secondFindPage.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -17,21 +18,91 @@ class thirdPage extends StatefulWidget{
   @override
   _thirdPageState createState() => _thirdPageState();
 }
+
 class _thirdPageState extends State<thirdPage> {
+  Future<Null> _showDialog() async {
+    await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            backgroundColor: Color(0xFFF8F8F8),
+            title: Center(
+                child: Column(
+                  children: [
+                    Text("Ви впевнені, що хочете ", style: TextStyle(color: Colors.black, fontSize: 20)),
+                    Text("повернутися назад?", style: TextStyle(color: Colors.black, fontSize: 20)),
+                    Padding(
+                      padding: EdgeInsets.only(top: 15),
+                      child: Text("Введені данні на цьому", style: TextStyle(color: Colors.black, fontSize: 16)),
+                    ),
+                    Text("кроці будуть втрачені", style: TextStyle(color: Colors.black, fontSize: 16)),
+                  ],
+                ),
+            ),
+            contentPadding: EdgeInsets.all(5.0),
+            actions: <Widget>[
+
+              Padding(
+                padding: EdgeInsets.only(left: 30, right: 60),
+                child:FlatButton(
+
+                  child: Center(
+                    child: Text("Так",
+                        style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontSize: 22,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black)),
+                  ),
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => secondPage(age: widget.age,sex: widget.sex, link: widget.link),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 30),
+                child: FlatButton(
+                  child: Center(
+                    child: Text("Ні",
+                        style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontSize: 22,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black)),
+                  ),
+                  onPressed: () async {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ],
+          );
+        });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row (
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(left:10, right: 60),
+              padding: EdgeInsets.only(left: 10, right: 60),
               child: InkWell(
-                onTap: ()=> Navigator.push(context,PageTransition(
-                    type: PageTransitionType.fade,
-                    child: secondPage(age: widget.age,sex: widget.sex, link: widget.link))),
-                child: Icon(Icons.arrow_back_rounded, color: const Color(0xff6d6b6b), size: 30),
+                onTap: () {
+                  _showDialog();
+                },
+                child: Icon(
+                    Icons.arrow_back_rounded, color: const Color(0xff6d6b6b),
+                    size: 30),
               ),
             ),
             Padding(
@@ -227,7 +298,7 @@ class _thirdPageState extends State<thirdPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => secondPage(age: widget.age,sex: widget.sex, link: widget.link),
+                      builder: (context) => resultPage(age: widget.age,sex: widget.sex, link: widget.link, holiday: widget.holiday, list: widget.list, chose: widget.chose,line: widget.line),
                     ),
                   );
                 },
