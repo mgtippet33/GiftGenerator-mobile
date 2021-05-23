@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gift_generator/api/api.dart';
 import 'package:gift_generator/models/User.dart';
 import 'package:gift_generator/models/UserHandler.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:gift_generator/pages/navigation.dart';
 import 'package:gift_generator/pages/payment/successPaymentPage.dart';
 import 'package:stripe_payment/stripe_payment.dart';
@@ -19,6 +20,7 @@ class _PaymentPageState extends State<PaymentPage> {
   Token _paymentToken;
   PaymentMethod _paymentMethod;
   String _error;
+  final box = GetStorage('MyStorage');
 
 //this client secret is typically created by a backend system
 //check https://stripe.com/docs/payments/payment-intents#passing-to-client
@@ -173,6 +175,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     ),
                   ),
                   onPressed: () {
+                    box.write('isPremium', true);
                     if (Platform.isIOS) {
                       _controller.jumpTo(450);
                     }

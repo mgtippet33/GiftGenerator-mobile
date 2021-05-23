@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/blocs/auth_bloc.dart';
+import 'package:gift_generator/constants/ApiConstants/apiConstants.dart';
 import 'package:gift_generator/models/UserHandler.dart';
 import 'package:gift_generator/pages/authorization/register.dart';
 import 'package:gift_generator/pages/account/cabinet.dart';
@@ -14,6 +15,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:gift_generator/models/User.dart' as myUser;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 import '../home.dart';
@@ -129,13 +131,13 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                               },
                             ),
                           ),
-                          /*Padding(
-                        padding: EdgeInsets.only(right: 20),
+                          Padding(
+                        padding: EdgeInsets.only(right: 20, top: 10, bottom: 5),
                         child: Align(
                           alignment: Alignment.topRight,
-                          child: Text("Відновити пароль"),
+                          child: InkWell(child: Text("Відновити пароль",), onTap: () => launch(ApiConstants.resetPassword_url),),
                         ),
-                      ),*/
+                      ),
                           Row(
                             children: [
                               Padding(
@@ -195,6 +197,7 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                                             _showDialog(text);
                                             print("Error"); //пользователь не найден
                                           }
+
                                         });
                                       });
                                     }

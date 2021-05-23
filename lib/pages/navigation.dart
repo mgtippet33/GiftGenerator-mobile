@@ -6,6 +6,7 @@ import 'package:page_transition/page_transition.dart';
 
 import 'account/notification.dart';
 
+
 class NavigationBar extends  StatelessWidget{
   Widget build(BuildContext context) {
     // TODO: implement build
