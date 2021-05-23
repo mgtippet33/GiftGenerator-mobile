@@ -16,7 +16,7 @@ class Cabinet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //_checkUser(context);
+    _checkUser(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
