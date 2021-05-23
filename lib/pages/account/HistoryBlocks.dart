@@ -37,7 +37,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: _openBox ? 507 : 190,
+        height: _openBox ? 550 : 230,
         width: 340,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
@@ -138,7 +138,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '1. ' + _historyBlocks.gifts[0].name,
+                  '1. ' + _historyBlocks.gifts[0].name+"...",
                   style: new TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15.0,
@@ -178,7 +178,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '2. ' + _historyBlocks.gifts[1].name,
+                  '2. ' + _historyBlocks.gifts[1].name+"...",
                   style: new TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15.0,
@@ -218,7 +218,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '3. ' + _historyBlocks.gifts[2].name,
+                  '3. ' + _historyBlocks.gifts[2].name+"...",
                   style: new TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15.0,
@@ -258,7 +258,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '4. ' + _historyBlocks.gifts[3].name,
+                  '4. ' + _historyBlocks.gifts[3].name+"...",
                   style: new TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15.0,
@@ -298,7 +298,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '5. ' + _historyBlocks.gifts[4].name,
+                  '5. ' + _historyBlocks.gifts[4].name+"...",
                   style: new TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15.0,
