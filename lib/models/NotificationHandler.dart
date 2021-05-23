@@ -12,7 +12,10 @@ class NotificationHandler {
   }
 
   int length(){
-    return _notifications.length;
+    if(_notifications != null){
+      return _notifications.length;
+    }
+    return -1;
   }
 
   List<HolidayNotification> getNotifications() {
