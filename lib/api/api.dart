@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:gift_generator/models/Gift.dart';
 import 'package:gift_generator/models/Interest.dart';
+import 'package:gift_generator/models/Notification.dart';
+import 'package:gift_generator/models/NotificationHandler.dart';
 import 'package:gift_generator/models/User.dart';
 import 'package:gift_generator/models/UserHistoryModel.dart';
 import 'package:http/http.dart' as http;
@@ -126,5 +128,23 @@ class ApiManager {
       content = UserHistoryModel(null, null, null, null, null, null, null, null);
     }
     return content;
+  }
+
+  void getNotification(String email) async {
+    List<HolidayNotification> content = null;
+    var url = Uri.parse(urls.ApiConstants.getNotification_url);
+    final responce = await http.post(url,
+        body: {"email": email});
+    if (responce.statusCode == 200) {
+      var data = json.decode(responce.body);
+      var notification = data['data']['holidays'].toList();
+      if(notification.length == 0) {
+        content.add(null);
+      } else {
+        content = notification.map<HolidayNotification>((json) =>
+            HolidayNotification.fromJson(json)).toList();
+      }
+      NotificationHandler(content);
+    }
   }
 }
