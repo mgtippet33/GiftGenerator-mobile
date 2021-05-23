@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/models/Notification.dart';
 import 'package:gift_generator/pages/navigation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({Key key}) : super(key: key);
@@ -15,19 +16,21 @@ class _StatefulNotificationState extends State<NotificationPage> {
 
   @override
   void initState() {
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool('isAllNotificationsRead', true);
+    });
+
     holidays.add(new HolidayNotification(
         "Сьогодні", "новий рік", new DateTime(2021, 01, 01), true));
     holidays.add(new HolidayNotification(
         "Через 5 днів", "холідейс", new DateTime(2021, 10, 11), false));
-    /*holidays.add("new year");
-    holidays.add("holiday");
-    datesDue.add("Сьогодні");
-    datesDue.add("Через 5 днів");
-    dates.add("31/01/01");
-    dates.add("26/12/20");
-    isAlreadyRead.add(false);
-    isAlreadyRead.add(true);*/
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    holidays.forEach((element) => element.isRead = false);
+    super.dispose();
   }
 
   @override
@@ -37,70 +40,80 @@ class _StatefulNotificationState extends State<NotificationPage> {
         title: Text("Повідомлення"),
         centerTitle: true,
       ),
-      body: ListView.builder(
-        itemCount: holidays.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-            child: Container(
-              width: 230,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-                color: Color(0xffE8FAC3),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: Container(
-                            width: 5,
-                            height: 5,
-                            //color: Color(0xffFA6F38),
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(50)),
-                              color: Color(0xffFA6F38),
+      body: SizedBox(
+        height: 400,
+        width: 400,
+        child: ListView.builder(
+          itemCount: holidays.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
+              child: Container(
+                width: 230,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  color: holidays[index].isRead == false ? Color(0xffE8FAC3) : Color(0xffC3CCFA),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Container(
+                              width: 5,
+                              height: 5,
+                              //color: Color(0xffFA6F38),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50)),
+                                color: holidays[index].isRead == true ? Color(0xffFA6F38) : Color(0xffE8FAC3),
+                              ),
                             ),
                           ),
-                        ),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                'datesDue[index]',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 19),
-                              ),
-                              Text(
-                                holidays[index],
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400, fontSize: 16),
-                              ),
-                            ]),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Text(
-                          'dates[index]',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 16),
-                        ),
-                      ],
-                    ),
-                  ],
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  holidays[index].daysDue,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 19),
+                                ),
+                                Text(
+                                  holidays[index].holiday,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16),
+                                ),
+                              ]),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text(
+                            holidays[index].date.day.toString() +
+                                "/" +
+                                holidays[index].date.month.toString() +
+                                "/" +
+                                holidays[index].date.year.toString(),
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
+                //title: Text('${holidays[index]}'),
               ),
-              //title: Text('${holidays[index]}'),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
       /* Wrap(
           spacing: 8.0, // gap between adjacent chips

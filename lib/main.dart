@@ -5,12 +5,16 @@ import 'package:gift_generator/blocs/auth_bloc.dart';
 import 'package:gift_generator/pages/account/cabinet.dart';
 import 'package:gift_generator/themeModel.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   await GetStorage.init('MyStorage');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(ChangeNotifierProvider<ThemeModel>(
+  SharedPreferences.getInstance().then((prefs) {
+    prefs.setBool('isAllNotificationsRead', false);
+  });
+  runApp(ChangeNotifierProvider(
     create: (BuildContext context) => ThemeModel(),
     child: MyApp(),
   ));
