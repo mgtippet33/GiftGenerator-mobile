@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:gift_generator/api/api.dart';
+import 'package:gift_generator/models/NotificationHandler.dart';
 import 'package:gift_generator/models/User.dart';
 import 'package:gift_generator/models/UserHandler.dart';
 import 'package:gift_generator/models/UserHistoryModel.dart';
@@ -238,6 +239,9 @@ class _CabinetState extends State<Cabinet> {
     _userName = user.name;
     if (user != null && _isPremium == true) {
       _historyFuture = ApiManager().getHistory(user.token, user.email);
+    }
+    if (user != null && NotificationHandler.instance.length() == 0) {
+      ApiManager().getNotification(user.email);
     }
   }
 }
