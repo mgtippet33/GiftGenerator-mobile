@@ -197,7 +197,7 @@ class _CabinetState extends State<Cabinet> {
                                     padding: EdgeInsets.only(left:10),
                                     child: Text(
                                       'Преміум акаунт',
-                                      style: TextStyle(color: color: Provider.of<ThemeModel>(context).currentTheme == lightTheme
+                                      style: TextStyle(color: Provider.of<ThemeModel>(context).currentTheme == lightTheme
                                           ? Color(0xff111323)
                                           : Color(0xffffffff)),
                                     ),
