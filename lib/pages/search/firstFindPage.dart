@@ -5,16 +5,12 @@ import 'package:gift_generator/pages/search/secondFindPage.dart';
 import 'package:gift_generator/services/validator.dart';
 import 'package:page_transition/page_transition.dart';
 
-// int globalSex=-1;
-// int globalAge=-1;
-// // String a = "";
-// String globalLink="None";
 class firstPage extends StatefulWidget{
   String age;
   int sex;
   String link;
   firstPage({Key key, this.age, this.sex, this.link}) : super(key: key);
-  //firstPage({Key key}) : super(key: key);
+
   @override
   _firstPageState createState() =>_firstPageState();
 }
@@ -222,13 +218,12 @@ class _firstPageState extends State<firstPage> {
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: TextFormField(
                   decoration:  InputDecoration(
-                    hintText: widget.link == "None" ? 'https://www.facebook.com/dari.na.165' : widget.link,
+                    hintText: widget.link=="None" ? "" : widget.link,
                     helperText: '*Якщо профіль закритий, аналіз сторінки неможливий',
                   ),
                   autofocus: false,
                   controller: _linkController,
                   onChanged: (text){
-                    if(FormValidator().validateLink(text)==null)
                       widget.link=text;
                   },
                   validator: (value) => FormValidator().validateLink(value),
@@ -257,13 +252,12 @@ class _firstPageState extends State<firstPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => secondPage(age: int.parse(widget.age),sex: widget.sex, link: widget.link),
+                          builder: (context) => secondPage(age: int.parse(widget.age),sex: widget.sex, link: widget.link.isEmpty ? "None" : widget.link),
                         ),
                       );
                       return;
                     }
-                    widget.age="-1";
-                    widget.link="None";
+                    widget.link="";
                     setState(() {
                       _firstValidate = true;
                     });

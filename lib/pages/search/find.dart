@@ -5,7 +5,7 @@ class Find extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: firstPage(age:"-1",sex:1,link:"None"),
+      body: firstPage(age:"-1",sex:1,link:""),
     );
   }
 }

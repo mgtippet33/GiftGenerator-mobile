@@ -54,7 +54,7 @@ class _SuccessPaymentPageState extends State<SuccessPaymentPage>
                         child: Container(
                           child: Center(
                             child: Padding(
-                              padding: EdgeInsets.only(left: 85.0, right: 85.0),
+                              padding: EdgeInsets.only(left: 105.0, right: 105.0),
                               child: Transform(
                                 alignment: FractionalOffset.center,
                                 transform: Matrix4.identity()
@@ -75,7 +75,7 @@ class _SuccessPaymentPageState extends State<SuccessPaymentPage>
                           ),
                           margin: EdgeInsets.only(top: 15, left: 15, right: 15),
                           height: 150.0,
-                          width: 250.0,
+                          width: 300.0,
                           decoration: BoxDecoration(
                             color: Color(0xFFFFFFFF),
                             borderRadius: BorderRadius.circular(12),
@@ -118,7 +118,7 @@ class _SuccessPaymentPageState extends State<SuccessPaymentPage>
                                       new BorderRadius.circular(10.0)),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 25),
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
                               child: Row(
                                 children: [
                                   Text(

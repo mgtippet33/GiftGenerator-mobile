@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/pages/navigation.dart';
+import 'package:gift_generator/pages/search/deathFindPage.dart';
 import 'package:gift_generator/pages/search/resultFindPage.dart';
 import 'package:gift_generator/pages/search/secondFindPage.dart';
 import 'package:page_transition/page_transition.dart';

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:gift_generator/blocs/auth_bloc.dart';
+import 'package:gift_generator/pages/account/cabinet.dart';
 import 'package:provider/provider.dart';
 
 import 'authorization/loginPage.dart';
