@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/models/UserHandler.dart';
 import 'package:gift_generator/models/UserHistoryModel.dart';
+import 'package:gift_generator/themeModel.dart';
+import 'package:gift_generator/themes/lightTheme.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HistoryBlocks extends StatefulWidget {
@@ -41,10 +44,10 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
         width: 340,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: Color(0xffC3CCFA),
+          color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffC3CCFA) : Color(0xff151050),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
+              color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Colors.grey.withOpacity(0.5) : Colors.black.withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 5,
               offset: Offset(0, 3), // changes position of shadow
@@ -63,7 +66,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                     style: new TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 16.0,
-                      color: Colors.black,
+                      color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
                     ),
                   ),
                   Text(
@@ -71,7 +74,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                     style: new TextStyle(
                       fontWeight: FontWeight.w200,
                       fontSize: 16.0,
-                      color: Colors.black,
+                      color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
                     ),
                   ),
                 ],
@@ -81,7 +84,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                 style: new TextStyle(
                   fontWeight: FontWeight.w200,
                   fontSize: 16.0,
-                  color: Colors.black,
+                  color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
                 ),
               ),
               Padding(padding: EdgeInsets.symmetric(vertical: 5)),
@@ -91,7 +94,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                     : "Посилання на соціальну мережу не надавалося",
                 style: new TextStyle(
                   fontSize: 14.0,
-                  color: Colors.black54,
+                  color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
                 ),
               ),
               Padding(padding: EdgeInsets.symmetric(vertical: 5)),
@@ -102,7 +105,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                     _historyBlocks.age.toString(),
                 style: new TextStyle(
                   fontSize: 15.0,
-                  color: Colors.black54,
+                  color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
                 ),
               ),
               Padding(
@@ -111,15 +114,16 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xffC3CCFA),
+                  primary: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffC3CCFA) : Color(0xff151050),
                   padding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                   elevation: 0,
                 ),
                 onPressed: () => {setState(() => _openBox = !_openBox)},
                 child: Container(
-                    child: Image.asset(
-                  "assets/bottom_arrow.png",
-                  height: 40,
+                    child: Icon(
+                  _openBox == true ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                  size: 30,
+                      color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffCBCBCD),
                 )),
               ),
             ],
@@ -142,7 +146,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                   style: new TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15.0,
-                    color: Colors.black,
+                    color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
                   ),
                 ),
                 Text(
@@ -150,7 +154,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                   style: new TextStyle(
                     fontWeight: FontWeight.w300,
                     fontSize: 14.0,
-                    color: Colors.black,
+                    color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
                   ),
                 ),
                 InkWell(
@@ -182,7 +186,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                   style: new TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15.0,
-                    color: Colors.black,
+                    color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
                   ),
                 ),
                 Text(
@@ -190,7 +194,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                   style: new TextStyle(
                     fontWeight: FontWeight.w300,
                     fontSize: 14.0,
-                    color: Colors.black,
+                    color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
                   ),
                 ),
                 InkWell(
@@ -222,7 +226,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                   style: new TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15.0,
-                    color: Colors.black,
+                    color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
                   ),
                 ),
                 Text(
@@ -230,7 +234,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                   style: new TextStyle(
                     fontWeight: FontWeight.w300,
                     fontSize: 14.0,
-                    color: Colors.black,
+                    color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
                   ),
                 ),
                 InkWell(
@@ -262,7 +266,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                   style: new TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15.0,
-                    color: Colors.black,
+                    color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
                   ),
                 ),
                 Text(
@@ -270,7 +274,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                   style: new TextStyle(
                     fontWeight: FontWeight.w300,
                     fontSize: 14.0,
-                    color: Colors.black,
+                    color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
                   ),
                 ),
                 InkWell(
@@ -302,7 +306,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                   style: new TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15.0,
-                    color: Colors.black,
+                    color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
                   ),
                 ),
                 Text(
@@ -310,7 +314,7 @@ class _HistoryBlocksState extends State<HistoryBlocks> {
                   style: new TextStyle(
                     fontWeight: FontWeight.w300,
                     fontSize: 14.0,
-                    color: Colors.black,
+                    color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
                   ),
                 ),
                 InkWell(

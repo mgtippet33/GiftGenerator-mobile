@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:gift_generator/pages/navigation.dart';
 import 'package:gift_generator/pages/search/secondFindPage.dart';
 import 'package:gift_generator/services/validator.dart';
+import 'package:gift_generator/themeModel.dart';
+import 'package:gift_generator/themes/lightTheme.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class firstPage extends StatefulWidget{
   String age;
@@ -23,10 +27,16 @@ class _firstPageState extends State<firstPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      backgroundColor : Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffffffff) : Color(0xff111323),
+      appBar: NewGradientAppBar(
+        gradient: Provider.of<ThemeModel>(context).currentTheme == lightTheme
+            ? LinearGradient(
+            colors: [Color(0xffAFCDFA), Color(0xffAEE3FA)])
+            : LinearGradient(
+            colors: [Color(0xff234983), Color(0xff4B81C3)]),
         title: Padding(
           padding: EdgeInsets.symmetric(horizontal: 96),
-          child: Text("Пошук подарунку")
+          child: Text("Пошук подарунку"),
         ),
         automaticallyImplyLeading: false,
       ),
@@ -75,17 +85,17 @@ class _firstPageState extends State<firstPage> {
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(
                             horizontal: 20, vertical: 5),
-                        shadowColor: Colors.black,
-                        primary: Color(0xffc3ccfa),
+                        shadowColor: Colors.grey,
+                        primary: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffc3ccfa) : Color(0xff151050),
                         shape: RoundedRectangleBorder(
                             side: widget.sex==0
                                 ? BorderSide(
-                                color: Color(0xff000000),
+                                color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff000000) : Color(0xffffffff),
                                 width: 1.5,
                                 style: BorderStyle.solid
                             )
                                 :BorderSide(
-                                color: Color(0xffc3ccfa),
+                                color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffc3ccfa) : Color(0xff151050),
                                 width: 1.5,
                                 style: BorderStyle.solid
                             ),
@@ -103,12 +113,14 @@ class _firstPageState extends State<firstPage> {
                         );
                       },
                       child: Row(children: [
-                        Image.asset("assets/man.png"),
+                        Image.asset(Provider.of<ThemeModel>(context).currentTheme == lightTheme ? "assets/man.png" : "assets/man_light.png"),
                         Padding(
                           padding: EdgeInsets.only(left: 10),
                           child: Text(
                             'Чоловіча',
-                            style: TextStyle(color: Colors.black54),
+                            style: TextStyle(
+                                color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff000000) : Color(0xffffffff),
+                            ),
                           ),
                         ),
                       ]),
@@ -120,16 +132,16 @@ class _firstPageState extends State<firstPage> {
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(
                             horizontal: 20, vertical: 5),
-                        shadowColor: Colors.black,
-                        primary: Color(0xffe8fac3),
+                        shadowColor: Colors.grey,
+                        primary: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffe8fac3) : Color(0xff113331),
                         shape: RoundedRectangleBorder(
                             side: widget.sex==1
                                 ? BorderSide(
-                                color: Color(0xff000000),
+                                color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff000000) : Color(0xffffffff),
                                 width: 1.5,
                                 style: BorderStyle.solid)
                                 : BorderSide(
-                                color: Color(0xffe8fac3),
+                                color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffe8fac3) : Color(0xff113331),
                                 width: 1.5,
                                 style: BorderStyle.solid),
                             borderRadius: new BorderRadius.circular(10.0)
@@ -146,12 +158,17 @@ class _firstPageState extends State<firstPage> {
                         );
                       },
                       child: Row(children: [
-                        Icon(Icons.star_rounded, color: const Color(0xff1d1c1c), size: 25),
+                        Icon(
+                            Icons.star_rounded,
+                            color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff000000) : Color(0xffffffff),
+                            size: 25),
                         Padding(
                           padding: EdgeInsets.only(left: 10),
                           child: Text(
                             'Інша',
-                            style: TextStyle(color: Colors.black54),
+                            style: TextStyle(
+                                color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff000000) : Color(0xffffffff),
+                            ),
                           ),
                         ),
                       ]),
@@ -163,17 +180,17 @@ class _firstPageState extends State<firstPage> {
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(
                             horizontal: 20, vertical: 5),
-                        shadowColor: Colors.black,
-                        primary: Color(0xfffad7c3),
+                        shadowColor: Colors.grey,
+                        primary: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xfffad7c3) : Color(0xff2E163D),
                         shape: RoundedRectangleBorder(
                             side: widget.sex==2
                                 ? BorderSide(
-                                color: Color(0xff000000),
+                                color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff000000) : Color(0xffffffff),
                                 width: 1.5,
                                 style: BorderStyle.solid
                             )
                                 :BorderSide(
-                                color: Color(0xfffad7c3),
+                                color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xfffad7c3) : Color(0xff2E163D),
                                 width: 1.5,
                                 style: BorderStyle.solid
                             ),
@@ -191,12 +208,14 @@ class _firstPageState extends State<firstPage> {
                         );
                       },
                       child: Row(children: [
-                        Image.asset("assets/woman.png"),
+                        Image.asset(Provider.of<ThemeModel>(context).currentTheme == lightTheme ? "assets/woman.png" : "assets/woman_light.png"),
                         Padding(
                           padding: EdgeInsets.only(left: 10),
                           child: Text(
                             'Жіноча',
-                            style: TextStyle(color: Colors.black54),
+                            style: TextStyle(
+                                color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff000000) : Color(0xffffffff),
+                            ),
                           ),
                         ),
                       ]),

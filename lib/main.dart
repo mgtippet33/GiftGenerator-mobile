@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   await GetStorage.init('MyStorage');
+  GetStorage('MyStorage').write("theme", 0);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SharedPreferences.getInstance().then((prefs) {

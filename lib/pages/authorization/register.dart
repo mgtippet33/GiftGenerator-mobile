@@ -8,6 +8,8 @@ import 'package:gift_generator/models/RegistrationData.dart';
 import 'package:gift_generator/models/User.dart';
 import 'package:gift_generator/pages/authorization/loginPage.dart';
 import 'package:gift_generator/services/validator.dart';
+import 'package:gift_generator/themeModel.dart';
+import 'package:gift_generator/themes/lightTheme.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -225,7 +227,7 @@ class _RegisterPageWidgetState extends State<Registration> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 40, vertical: 15),
                             shadowColor: Colors.black,
-                            primary: Colors.white,
+                            primary: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffffffff) : Color(0xff353535),
                             shape: RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(10.0))),
                         child: Row(children: [
@@ -235,7 +237,9 @@ class _RegisterPageWidgetState extends State<Registration> {
                           ),
                           Text(
                             'Зареєструватися через google',
-                            style: TextStyle(color: Colors.black54),
+                            style: TextStyle(
+                              color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff595656) : Color(0xffCDCDCD)
+                            ),
                           ),
                         ]),
                       ),

@@ -10,6 +10,7 @@ import 'package:gift_generator/pages/authorization/register.dart';
 import 'package:gift_generator/pages/account/cabinet.dart';
 import 'package:gift_generator/themeModel.dart';
 import 'package:gift_generator/api/api.dart';
+import 'package:gift_generator/themes/lightTheme.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -239,7 +240,7 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 40, vertical: 15),
                                   shadowColor: Colors.black,
-                                  primary: Colors.white,
+                                  primary: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffffffff) : Color(0xff353535),
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           new BorderRadius.circular(10.0))),
@@ -251,19 +252,12 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                                 ),
                                 Text(
                                   'Авторизуватися через google',
-                                  style: TextStyle(color: Colors.black54),
+                                  style: TextStyle( color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff595656) : Color(0xffCDCDCD)),
                                 ),
                               ]),
                             ),
                           ),
                         ],
-                      ),
-                      Center(
-                        child: RaisedButton(
-                            child: Text("Change Theme"),
-                            onPressed: () {
-                              Provider.of<ThemeModel>(context).toggleTheme();
-                            }),
                       ),
                     ],
                   ),
