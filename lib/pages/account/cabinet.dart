@@ -49,6 +49,12 @@ class _CabinetState extends State<Cabinet> {
     });
   }
 
+  @override
+  void setState(fn) {
+    // TODO: implement setState
+    super.setState(fn);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -234,13 +240,16 @@ class _CabinetState extends State<Cabinet> {
   }
 
   _setCurrentUser(User user) {
-    this.user = user;
-    _isPremium = user.premium;
-    _userName = user.name;
+    setState(() {
+      this.user = user;
+      _isPremium = user.premium;
+      _userName = user.name;
+    });
     if (user != null && _isPremium == true) {
       _historyFuture = ApiManager().getHistory(user.token, user.email);
     }
-    if (user != null && NotificationHandler.instance.length() == 0) {
+     //var lenNotification = NotificationHandler.instance.length();
+    if (user != null) {
       ApiManager().getNotification(user.email);
     }
   }

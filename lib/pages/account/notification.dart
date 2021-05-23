@@ -58,7 +58,7 @@ class _StatefulNotificationState extends State<NotificationPage> {
   }
 
   _checkNotification(List<HolidayNotification> notifications) {
-    if (notifications.length == 1 && notifications[0] == null) {
+    if (notifications == null || (notifications.length == 1 && notifications[0] == null)) {
       _resultWidget = Center(
         child: Text(
           'Найближчих свят не передбачається!',

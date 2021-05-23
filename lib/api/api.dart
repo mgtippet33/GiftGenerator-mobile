@@ -139,12 +139,16 @@ class ApiManager {
       var data = json.decode(responce.body);
       var notification = data['data']['holidays'].toList();
       if(notification.length == 0) {
-        content.add(null);
+        content = null;
       } else {
         content = notification.map<HolidayNotification>((json) =>
             HolidayNotification.fromJson(json)).toList();
       }
-      NotificationHandler(content);
+      if(NotificationHandler.instance.getNotifications() == null){
+        NotificationHandler(content);
+      } else{
+        NotificationHandler.instance.addNotifications(content);
+      }
     }
   }
 }
