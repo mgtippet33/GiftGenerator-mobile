@@ -7,6 +7,7 @@ import 'package:gift_generator/api/api.dart';
 import 'package:gift_generator/models/Gift.dart';
 import 'package:gift_generator/models/User.dart';
 import 'package:gift_generator/models/UserHandler.dart';
+import 'package:gift_generator/pages/search/deathFindPage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../navigation.dart';
@@ -46,11 +47,14 @@ class _resultPageState extends State<resultPage> {
     Color(0xfffad7c3),
     Color(0xfffac3d7)
   ];
+  var index = 0;
 
   var presentLink = [];
   var presentRate = [];
   var presentName = [];
   var presentDesc = [];
+
+  bool f = true;
   Widget _resultWidget;
   Future<List<Gift>> _gifts;
   List<String> list;
@@ -140,25 +144,45 @@ class _resultPageState extends State<resultPage> {
                                     color: Colors.black, fontSize: 16)),
                           ],
                         )
-                      : Column(
+                      : k==2
+                        ? Column(
+                            children: [
+                              Text("Ви впевнені, що хочете ",
+                                style: TextStyle(
+                                color: Colors.black, fontSize: 20)),
+                              Text("оновити вибірку?",
+                                style: TextStyle(
+                                color: Colors.black, fontSize: 20)),
+                              Padding(
+                                padding: EdgeInsets.only(top: 15),
+                                child: Text("Ви не зможете переглянути ",
+                                style: TextStyle(
+                                  color: Colors.black, fontSize: 16)),
+                              ),
+                              Text(" цю вибірку без преміум акаунту ",
+                                style: TextStyle(
+                                color: Colors.black, fontSize: 16)),
+                              ],
+                          )
+                        :Column(
                           children: [
-                            Text("Ви впевнені, що хочете ",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 20)),
-                            Text("оновити вибірку?",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 20)),
+                            Text("Будь-ласка,",
+                              style: TextStyle(
+                              color: Colors.black, fontSize: 20)),
+                            Text("залиште відгук",
+                              style: TextStyle(
+                              color: Colors.black, fontSize: 20)),
                             Padding(
                               padding: EdgeInsets.only(top: 15),
-                              child: Text("Ви не зможете переглянути ",
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16)),
+                              child: Text("Нам дуже важлива",
+                              style: TextStyle(
+                                color: Colors.black, fontSize: 16)),
                             ),
-                            Text(" цю вибірку без преміум акаунту ",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 16)),
-                          ],
-                        ),
+                            Text("Ваша думка",
+                              style: TextStyle(
+                              color: Colors.black, fontSize: 16)),
+                ],
+              ),
             ),
             contentPadding: EdgeInsets.all(5.0),
             actions: <Widget>[
@@ -177,19 +201,23 @@ class _resultPageState extends State<resultPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => k != 2
-                            ? firstPage(
+                        builder: (context) {
+                          if(k==0 || k==1){
+                            firstPage(
                                 age: widget.age.toString(),
                                 sex: widget.sex,
-                                link: widget.link)
-                            :  resultPage(
-                            age: widget.age,
-                            sex: widget.sex,
-                            link: widget.link,
-                            holiday: widget.holiday,
-                            list: widget.list,
-                            chose: widget.chose,
-                            line: widget.line),
+                                link: widget.link);
+                          } else if(k==2){
+                            resultPage(
+                                age: widget.age,
+                                sex: widget.sex,
+                                link: widget.link,
+                                holiday: widget.holiday,
+                                list: widget.list,
+                                chose: widget.chose,
+                                line: widget.line);
+                          }
+                        }
                             // : resultPage(
                             // age: widget.age,
                             // sex: widget.sex,
@@ -200,6 +228,11 @@ class _resultPageState extends State<resultPage> {
                             // line: widget.line),
                       ),
                     );
+                    if (k==3)
+                    {
+                      Navigator.pop(context);
+                      launch('https://giftgeneratorapp.herokuapp.com/');
+                    }
                   },
                 ),
               ),
@@ -223,7 +256,14 @@ class _resultPageState extends State<resultPage> {
           );
         });
   }
-
+  String getStringBegin( String str){
+    var mylist = str.split(' ');
+    return mylist[0] + " " + mylist[1] ;
+  }
+  String getStringEnd( String str){
+    var mylist = str.split(' ');
+    return mylist[2] + " " + mylist[3]+"...";
+  }
   minusChose(dynamic chose){
       var count = chose.where((item) => item == true).length;
       if(chose != null && count > 1) {
@@ -265,7 +305,7 @@ class _resultPageState extends State<resultPage> {
                               horizontal: 20, vertical: 10),
                           child: Container(
                             width: 340,
-                            height: 130,
+                            height: 180,
                             clipBehavior: Clip.antiAlias,
                             decoration: BoxDecoration(
                               color: color[i % 4],
@@ -276,13 +316,17 @@ class _resultPageState extends State<resultPage> {
                               children: [
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      left: 10, right: 150, top: 15),
-                                  child: Text(presentName[i],
-                                      style: TextStyle(fontSize: 18)),
+                                      left: 10, top: 15),
+                                  child: Column(
+                                    children: [
+                                      Text(getStringBegin(presentName[i]), style: TextStyle(fontSize: 18)),
+                                      Text(getStringEnd(presentName[i]), style: TextStyle(fontSize: 18))
+                                    ],
+                                  ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      left: 25, right: 125, top: 15),
+                                      left: 10, right: 140, top: 15),
                                   child: InkWell(
                                     child: new Text('Посилання на подарунок',
                                         style: TextStyle(
@@ -290,27 +334,31 @@ class _resultPageState extends State<resultPage> {
                                             decoration:
                                             TextDecoration.underline,
                                             fontSize: 16)),
-                                    onTap: () => launch(presentLink[i]),
+                                    onTap: () {
+                                      f = false;
+                                      launch(presentLink[i]);
+
+                                    },
                                   ),
                                 ),
                                 Row(
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          left: 27, right: 10, top: 15),
+                                          left: 10, right: 10, top: 15),
                                       child: Text("Рейтинг подарунку",
-                                          style: TextStyle(fontSize: 14)),
+                                          style: TextStyle(fontSize: 16)),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(top: 15),
                                       child: Text(presentRate[i],
-                                          style: TextStyle(fontSize: 14)),
+                                          style: TextStyle(fontSize: 16)),
                                     ),
                                     Padding(
                                       padding:
                                       EdgeInsets.only(right: 10, top: 15),
                                       child: Text("%",
-                                          style: TextStyle(fontSize: 14)),
+                                          style: TextStyle(fontSize: 16)),
                                     ),
                                   ],
                                 ),
@@ -366,15 +414,16 @@ class _resultPageState extends State<resultPage> {
               ),
             );
           } else {
-            _resultWidget = Center(
-              child: SizedBox(width: 100,
-                height: 100,
-                child: CircularProgressIndicator(
-                  strokeWidth: 10,
-                  backgroundColor: Colors.cyanAccent,
-                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+            _resultWidget =  Center(
+                child: SizedBox(width: 100,
+                  height: 100,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 10,
+                    backgroundColor: Colors.cyanAccent,
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                  ),
                 ),
-              ));
+              );
           }
           return Scaffold(
             appBar: AppBar(
@@ -399,7 +448,24 @@ class _resultPageState extends State<resultPage> {
               ),
               automaticallyImplyLeading: false,
             ),
-            body: _resultWidget,
+            body: SingleChildScrollView(
+              child:Column(
+                children: [
+                  _resultWidget,
+                  Opacity(opacity: 0.0, child:ElevatedButton(
+                      onPressed:() {
+                        f ? Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => deathPage(),
+                        ),)
+                        :_showDialog(3);
+                        },
+                      child: Text("")),
+                  ),
+                ],
+              ),
+            ),
             bottomNavigationBar: NavigationBar(),
           );
         });

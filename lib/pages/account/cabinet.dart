@@ -123,9 +123,12 @@ class _CabinetState extends State<Cabinet> {
                                     ? Colors.deepOrangeAccent
                                     : Colors.white,
                               ),
-                              child: _image == null
-                                  ? Image.asset("assets/account_img.png")
-                                  : Image.file(_image),
+                              child: Padding(
+                                padding: EdgeInsets.only(top:5),
+                                child: _image == null
+                                    ? Image.asset("assets/account_img.png")
+                                    : Image.file(_image),
+                              ),
                             ),
                           ),
                           Column(children: [
@@ -162,9 +165,12 @@ class _CabinetState extends State<Cabinet> {
                                         : "assets/primium_unactive.png",
                                     height: 35,
                                   ),
-                                  Text(
-                                    'Преміум акаунт',
-                                    style: TextStyle(color: Colors.black54),
+                                  Padding(
+                                    padding: EdgeInsets.only(left:10),
+                                    child: Text(
+                                      'Преміум акаунт',
+                                      style: TextStyle(color: Colors.black54),
+                                    ),
                                   ),
                                 ]),
                               ),

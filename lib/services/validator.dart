@@ -55,8 +55,8 @@ class FormValidator {
     }
   }
   String validateLink(String value){
-    String patttern1 = r'(^https:\/\/www.facebook.com\/+\/$)';
-    String patttern2 = r'(^https://twitter.com/+/$)';
+    String patttern1 = r'(^https:\/\/www.facebook.com\/+$)';
+    String patttern2 = r'(^https:\/\/twitter.com\/+$)';
     RegExp regExp1 = new RegExp(patttern1);
     RegExp regExp2 = new RegExp(patttern2);
     if (value=="None" || value =="") {

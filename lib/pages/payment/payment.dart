@@ -160,7 +160,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         borderRadius: new BorderRadius.circular(10.0)),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 95),
+                    padding: const EdgeInsets.symmetric(horizontal: 85),
                     child: Row(
                       children: [
                         Image.asset('assets/google.png'),
