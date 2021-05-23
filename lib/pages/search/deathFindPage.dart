@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:gift_generator/pages/navigation.dart';
 import 'package:gift_generator/pages/search/firstFindPage.dart';
+import 'package:gift_generator/themeModel.dart';
+import 'package:gift_generator/themes/lightTheme.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class deathPage extends StatefulWidget{
-
+class deathPage extends StatefulWidget {
   deathPage({Key key}) : super(key: key);
 
   @override
   _deathPageState createState() => _deathPageState();
 }
+
 class _deathPageState extends State<deathPage> {
   var presentName = [
     'Вічна троянда в колбі',
@@ -40,7 +44,18 @@ class _deathPageState extends State<deathPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      backgroundColor:
+      Provider
+          .of<ThemeModel>(context)
+          .currentTheme == lightTheme
+          ? Color(0xffffffff)
+          : Color(0xff111323),
+      appBar: NewGradientAppBar(
+        gradient: Provider
+            .of<ThemeModel>(context)
+            .currentTheme == lightTheme
+            ? LinearGradient(colors: [Color(0xffAFCDFA), Color(0xffAEE3FA)])
+            : LinearGradient(colors: [Color(0xff234983), Color(0xff4B81C3)]),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -51,13 +66,18 @@ class _deathPageState extends State<deathPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => firstPage(age: "-1",sex: 1, link: "None"),
+                      builder: (context) =>
+                          firstPage(age: "-1", sex: 1, link: "None"),
                     ),
                   );
                 },
-                child: Icon(
-                    Icons.arrow_back_rounded, color: const Color(0xff6d6b6b),
-                    size: 30),
+                child: Icon(Icons.arrow_back_rounded,
+                    color: Provider
+                        .of<ThemeModel>(context)
+                        .currentTheme ==
+                        lightTheme
+                        ? Color(0xff6d6b6b)
+                        : Color(0xffffffff), size: 30),
               ),
             ),
             Padding(

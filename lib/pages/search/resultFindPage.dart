@@ -8,6 +8,10 @@ import 'package:gift_generator/models/Gift.dart';
 import 'package:gift_generator/models/User.dart';
 import 'package:gift_generator/models/UserHandler.dart';
 import 'package:gift_generator/pages/search/deathFindPage.dart';
+import 'package:gift_generator/themeModel.dart';
+import 'package:gift_generator/themes/lightTheme.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../navigation.dart';
@@ -41,14 +45,6 @@ class resultPage extends StatefulWidget {
 }
 
 class _resultPageState extends State<resultPage> {
-  var color = [
-    Color(0xffc3ccfa),
-    Color(0xffd1fac3),
-    Color(0xfffad7c3),
-    Color(0xfffac3d7)
-  ];
-  var index = 0;
-
   var presentLink = [];
   var presentRate = [];
   var presentName = [];
@@ -102,26 +98,26 @@ class _resultPageState extends State<resultPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
             ),
-            backgroundColor: Color(0xFFF8F8F8),
+            backgroundColor: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFFF8F8F8) : Color(0xFF575863),
             title: Center(
               child: k == 0
                   ? Column(
                       children: [
                         Text("Ви впевнені, що хочете ",
                             style:
-                                TextStyle(color: Colors.black, fontSize: 20)),
+                                TextStyle(color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 20)),
                         Text("повернутися назад?",
                             style:
-                                TextStyle(color: Colors.black, fontSize: 20)),
+                                TextStyle(color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 20)),
                         Padding(
                           padding: EdgeInsets.only(top: 15),
                           child: Text("Введені данні на цьому",
                               style:
-                                  TextStyle(color: Colors.black, fontSize: 16)),
+                                  TextStyle(color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 16)),
                         ),
                         Text("кроці будуть втрачені",
                             style:
-                                TextStyle(color: Colors.black, fontSize: 16)),
+                                TextStyle(color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 16)),
                       ],
                     )
                   : k == 1
@@ -129,19 +125,19 @@ class _resultPageState extends State<resultPage> {
                           children: [
                             Text("Ви впевнені, що хочете ",
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 20)),
+                                    color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 20)),
                             Text("почати спочатку?",
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 20)),
+                                    color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 20)),
                             Padding(
                               padding: EdgeInsets.only(top: 15),
                               child: Text("Ви не зможете переглянути ",
                                   style: TextStyle(
-                                      color: Colors.black, fontSize: 16)),
+                                      color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 16)),
                             ),
                             Text(" цю вибірку без преміум акаунту ",
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 16)),
+                                    color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 16)),
                           ],
                         )
                       : k==2
@@ -149,38 +145,38 @@ class _resultPageState extends State<resultPage> {
                             children: [
                               Text("Ви впевнені, що хочете ",
                                 style: TextStyle(
-                                color: Colors.black, fontSize: 20)),
+                                color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 20)),
                               Text("оновити вибірку?",
                                 style: TextStyle(
-                                color: Colors.black, fontSize: 20)),
+                                color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 20)),
                               Padding(
                                 padding: EdgeInsets.only(top: 15),
                                 child: Text("Ви не зможете переглянути ",
                                 style: TextStyle(
-                                  color: Colors.black, fontSize: 16)),
+                                  color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 16)),
                               ),
                               Text(" цю вибірку без преміум акаунту ",
                                 style: TextStyle(
-                                color: Colors.black, fontSize: 16)),
+                                color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 16)),
                               ],
                           )
                         :Column(
                           children: [
                             Text("Будь-ласка,",
                               style: TextStyle(
-                              color: Colors.black, fontSize: 20)),
+                              color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 20)),
                             Text("залиште відгук",
                               style: TextStyle(
-                              color: Colors.black, fontSize: 20)),
+                              color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 20)),
                             Padding(
                               padding: EdgeInsets.only(top: 15),
                               child: Text("Нам дуже важлива",
                               style: TextStyle(
-                                color: Colors.black, fontSize: 16)),
+                                color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 16)),
                             ),
                             Text("Ваша думка",
                               style: TextStyle(
-                              color: Colors.black, fontSize: 16)),
+                              color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5), fontSize: 16)),
                 ],
               ),
             ),
@@ -195,7 +191,7 @@ class _resultPageState extends State<resultPage> {
                             fontFamily: 'Roboto',
                             fontSize: 22,
                             fontWeight: FontWeight.w600,
-                            color: Colors.black)),
+                            color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5))),
                   ),
                   onPressed: () async {
                     Navigator.push(
@@ -245,7 +241,7 @@ class _resultPageState extends State<resultPage> {
                             fontFamily: 'Roboto',
                             fontSize: 22,
                             fontWeight: FontWeight.w600,
-                            color: Colors.black)),
+                            color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5))),
                   ),
                   onPressed: () async {
                     Navigator.pop(context);
@@ -272,8 +268,23 @@ class _resultPageState extends State<resultPage> {
       }
       return chose;
   }
+
   @override
   Widget build(BuildContext context) {
+    var color = [
+      Provider.of<ThemeModel>(context).currentTheme == lightTheme
+          ? Color(0xffc3ccfa)
+          : Color(0xFF2E163D),
+      Provider.of<ThemeModel>(context).currentTheme == lightTheme
+          ? Color(0xffd1fac3)
+          : Color(0xFF113331),
+      Provider.of<ThemeModel>(context).currentTheme == lightTheme
+          ? Color(0xfffad7c3)
+          : Color(0xFF763E24),
+      Provider.of<ThemeModel>(context).currentTheme == lightTheme
+          ? Color(0xfffac3d7)
+          : Color(0xFF151050)
+    ];
     return FutureBuilder(
         future: _gifts,
         builder: (context, snapshot) {
@@ -289,7 +300,7 @@ class _resultPageState extends State<resultPage> {
                 children: [
                   Padding(
                     padding:
-                    EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+                        EdgeInsets.symmetric(horizontal: 100, vertical: 20),
                     child: Text(
                       "Знайдені варіанти",
                       style: TextStyle(
@@ -310,7 +321,7 @@ class _resultPageState extends State<resultPage> {
                             decoration: BoxDecoration(
                               color: color[i % 4],
                               borderRadius:
-                              BorderRadius.all(Radius.circular(10)),
+                                  BorderRadius.all(Radius.circular(10)),
                             ),
                             child: Column(
                               children: [
@@ -332,7 +343,7 @@ class _resultPageState extends State<resultPage> {
                                         style: TextStyle(
                                             color: Colors.lightBlue,
                                             decoration:
-                                            TextDecoration.underline,
+                                                TextDecoration.underline,
                                             fontSize: 16)),
                                     onTap: () {
                                       f = false;
@@ -356,7 +367,7 @@ class _resultPageState extends State<resultPage> {
                                     ),
                                     Padding(
                                       padding:
-                                      EdgeInsets.only(right: 10, top: 15),
+                                          EdgeInsets.only(right: 10, top: 15),
                                       child: Text("%",
                                           style: TextStyle(fontSize: 16)),
                                     ),
@@ -373,8 +384,8 @@ class _resultPageState extends State<resultPage> {
                         vertical: 10.0, horizontal: 20),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 104, vertical: 15),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 104, vertical: 15),
                         shadowColor: Colors.black,
                         primary: Color(0xff3d99df),
                         shape: RoundedRectangleBorder(
@@ -394,8 +405,8 @@ class _resultPageState extends State<resultPage> {
                         vertical: 10.0, horizontal: 20),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 100, vertical: 15),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 100, vertical: 15),
                         shadowColor: Colors.black,
                         primary: Color(0xff3d99df),
                         shape: RoundedRectangleBorder(
@@ -426,7 +437,17 @@ class _resultPageState extends State<resultPage> {
               );
           }
           return Scaffold(
-            appBar: AppBar(
+            backgroundColor:
+                Provider.of<ThemeModel>(context).currentTheme == lightTheme
+                    ? Color(0xffffffff)
+                    : Color(0xff111323),
+            appBar: NewGradientAppBar(
+              gradient:
+                  Provider.of<ThemeModel>(context).currentTheme == lightTheme
+                      ? LinearGradient(
+                          colors: [Color(0xffAFCDFA), Color(0xffAEE3FA)])
+                      : LinearGradient(
+                          colors: [Color(0xff234983), Color(0xff4B81C3)]),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -437,7 +458,12 @@ class _resultPageState extends State<resultPage> {
                         _showDialog(0);
                       },
                       child: Icon(Icons.arrow_back_rounded,
-                          color: const Color(0xff6d6b6b), size: 30),
+                          color:
+                              Provider.of<ThemeModel>(context).currentTheme ==
+                                      lightTheme
+                                  ? Color(0xff6d6b6b)
+                                  : Color(0xffffffff),
+                          size: 30),
                     ),
                   ),
                   Padding(

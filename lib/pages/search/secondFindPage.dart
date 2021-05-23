@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gift_generator/pages/navigation.dart';
 import 'package:gift_generator/pages/search/thirdFindPage.dart';
+import 'package:gift_generator/themeModel.dart';
+import 'package:gift_generator/themes/lightTheme.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 import 'firstFindPage.dart';
 
@@ -80,15 +84,6 @@ class _secondPageState extends State<secondPage> {
     '8 березня',
     'Інше'
   ];
-  var icons = [
-    Icon(Icons.cake_rounded, color: const Color(0xff1d1c1c), size: 25),
-    Icon(Icons.ac_unit_rounded, color: const Color(0xff1d1c1c), size: 25),
-    Icon(Icons.wc_rounded, color: const Color(0xff1d1c1c), size: 25),
-    Icon(Icons.airplanemode_active, color: const Color(0xff1d1c1c), size: 25),
-    Icon(Icons.person, color: const Color(0xff1d1c1c), size: 25),
-    Icon(Icons.star_rounded, color: const Color(0xff1d1c1c), size: 25)
-  ];
-  var color = [Color(0xffe8fac3), Color(0xffc3ccfa)];
   String line = "";
   bool flag = false;
 
@@ -98,9 +93,24 @@ class _secondPageState extends State<secondPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    var icons = [
+      Icon(Icons.cake_rounded, color:  Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1d1c1c) : Color(0xffE5E5E5), size: 25),
+      Icon(Icons.ac_unit_rounded, color:  Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1d1c1c) : Color(0xffE5E5E5), size: 25),
+      Icon(Icons.wc_rounded, color:  Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1d1c1c) : Color(0xffE5E5E5), size: 25),
+      Icon(Icons.airplanemode_active, color:  Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1d1c1c) : Color(0xffE5E5E5), size: 25),
+      Icon(Icons.person, color:  Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1d1c1c) : Color(0xffE5E5E5), size: 25),
+      Icon(Icons.star_rounded, color:  Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1d1c1c) : Color(0xffE5E5E5), size: 25)
+    ];
+    var color = [Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffe8fac3) : Color(0xff113331), Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffc3ccfa) : Color(0xff2E163D)];
 
+    return Scaffold(
+      backgroundColor : Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffffffff) : Color(0xff111323),
+      appBar: NewGradientAppBar(
+        gradient: Provider.of<ThemeModel>(context).currentTheme == lightTheme
+            ? LinearGradient(
+            colors: [Color(0xffAFCDFA), Color(0xffAEE3FA)])
+            : LinearGradient(
+            colors: [Color(0xff234983), Color(0xff4B81C3)]),
         title: Row (
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -110,7 +120,7 @@ class _secondPageState extends State<secondPage> {
                 onTap: ()=> Navigator.push(context,PageTransition(
                     type: PageTransitionType.fade,
                     child: firstPage(age: widget.age.toString(),sex: widget.sex, link: widget.link))),
-                child: Icon(Icons.arrow_back_rounded, color: const Color(0xff6d6b6b), size: 30),
+                child: Icon(Icons.arrow_back_rounded, color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff6d6b6b) : Color(0xffffffff), size: 30),
               ),
             ),
             Padding(
@@ -121,7 +131,8 @@ class _secondPageState extends State<secondPage> {
         ),
         automaticallyImplyLeading: false,
       ),
-      body: SingleChildScrollView(
+      body:
+      SingleChildScrollView(
         child: Column(
           children: [
             Padding(
@@ -185,7 +196,9 @@ class _secondPageState extends State<secondPage> {
                             padding: EdgeInsets.only(left: 10),
                             child: Text(
                               holiday[i],
-                              style: TextStyle(color: Color(0xff000000)),
+                              style: TextStyle(
+                                  color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff000000) : Color(0xffE5E5E5),
+                              ),
                             ),
                           ),
                         ],
