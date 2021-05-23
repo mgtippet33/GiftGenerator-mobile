@@ -42,7 +42,6 @@ class _CabinetState extends State<Cabinet> {
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
-        print(_image.toString());
       } else {
         print('No image selected.');
       }

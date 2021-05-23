@@ -74,7 +74,7 @@ class _resultPageState extends State<resultPage> {
         gender = "Жінка";
         break;
     }
-    if (link == "None") {
+    if (link == "None" || link.length == 0) {
       link = null;
     }
     List<String> interests = [];
@@ -182,22 +182,22 @@ class _resultPageState extends State<resultPage> {
                                 age: widget.age.toString(),
                                 sex: widget.sex,
                                 link: widget.link)
-                            // :  resultPage(
-                            // age: widget.age,
-                            // sex: widget.sex,
-                            // link: widget.link,
-                            // holiday: widget.holiday,
-                            // list: widget.list,
-                            // chose: widget.chose,
-                            // line: widget.line),
-                            : resultPage(
+                            :  resultPage(
                             age: widget.age,
                             sex: widget.sex,
                             link: widget.link,
                             holiday: widget.holiday,
                             list: widget.list,
-                            chose: minusChose(widget.chose),
+                            chose: widget.chose,
                             line: widget.line),
+                            // : resultPage(
+                            // age: widget.age,
+                            // sex: widget.sex,
+                            // link: widget.link,
+                            // holiday: widget.holiday,
+                            // list: widget.list,
+                            // chose: minusChose(widget.chose),
+                            // line: widget.line),
                       ),
                     );
                   },
