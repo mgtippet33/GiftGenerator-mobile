@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_generator/models/Notification.dart';
@@ -12,23 +11,22 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _StatefulNotificationState extends State<NotificationPage> {
-  List<String> holidays = [];
-  List<String> datesDue = [];
-  List<String> dates = [];
-  List<bool> isAlreadyRead = [];
+  List<HolidayNotification> holidays = List();
 
   @override
   void initState() {
-   /* holidays.add(new HolidayNotification("Сьогодні", "новий рік", new DateTime(2021, 01, 01), true));
-    holidays.add(new HolidayNotification("Через 5 днів", "холідейс", new DateTime(2021, 10, 11), false));*/
-    holidays.add("new year");
+    holidays.add(new HolidayNotification(
+        "Сьогодні", "новий рік", new DateTime(2021, 01, 01), true));
+    holidays.add(new HolidayNotification(
+        "Через 5 днів", "холідейс", new DateTime(2021, 10, 11), false));
+    /*holidays.add("new year");
     holidays.add("holiday");
     datesDue.add("Сьогодні");
     datesDue.add("Через 5 днів");
     dates.add("31/01/01");
     dates.add("26/12/20");
     isAlreadyRead.add(false);
-    isAlreadyRead.add(true);
+    isAlreadyRead.add(true);*/
     super.initState();
   }
 
@@ -74,7 +72,7 @@ class _StatefulNotificationState extends State<NotificationPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                               'datesDue[index]',
+                                'datesDue[index]',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500, fontSize: 19),
                               ),
