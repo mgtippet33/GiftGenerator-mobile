@@ -1,3 +1,6 @@
+
+import 'dart:convert';
+
 class User {
   String token;
   String name;
@@ -32,4 +35,10 @@ class User {
         json['googleSignIn']
     );
   }
+}
+
+String convertToUTF8(String source){
+  List<int> encoded = Latin1Codec().encode(source);
+  String decoded = utf8.decode(encoded);
+  return decoded;
 }

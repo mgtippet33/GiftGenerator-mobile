@@ -122,7 +122,9 @@ class ApiManager {
       };
       content = UserHistoryModel.fromJson(historyData);
     }
-    print(content);
+    else {
+      content = UserHistoryModel(null, null, null, null, null, null, null, null);
+    }
     return content;
   }
 }

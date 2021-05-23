@@ -34,6 +34,7 @@ class _CabinetState extends State<Cabinet> {
   final picker = ImagePicker();
   Widget _resultWidget;
   String _userName = "";
+  bool _loadHistory;
 
   Future<File> getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -48,28 +49,6 @@ class _CabinetState extends State<Cabinet> {
     });
   }
 
-  // @override
-  // initState() {
-  //   // if (box.read('isPremium') == null) {
-  //   //   box.write('isPremium', false);
-  //   // }
-  //
-  //
-  //
-  //
-  //   // _history.add(new UserHistoryModel('New year', "01/01", "music, gaming",
-  //   //     "https://bezkoder.com/dart-list/", "woman", 23));
-  //   // _history.add(new UserHistoryModel('Happy birthday', "01/01", "music",
-  //   //     "https://bezkoder.com/dart-list/", "woman", 23));
-  //   // _history.add(new UserHistoryModel(
-  //   //     'New year 1',
-  //   //     "01/02",
-  //   //     "music, gaming, cooking",
-  //   //     "https://stackoverflow.com/questions/51013444/how-to-change-font-size-of-flutter-material-button",
-  //   //     "man",
-  //   //     23));
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +56,22 @@ class _CabinetState extends State<Cabinet> {
     return FutureBuilder(
         future: _historyFuture,
         builder: (context, snapshot) {
-           if (_isPremium && !snapshot.hasData) {
+          if(_isPremium && snapshot.hasData) {
+            if(snapshot.data.holiday == null && snapshot.data.date == null && snapshot.data.interests == null) {
+              _loadHistory = false;
+              _resultWidget = Center(
+                child: Text(
+                  'Швидше за все,ви ще не шукали подарунки!',
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w300),
+                ),
+              );
+            }
+            else{
+              _loadHistory = true;
+            }
+          }
+           else if (_isPremium && !snapshot.hasData) {
+             _loadHistory = false;
             _resultWidget = Center(
                 child: SizedBox(
               width: 50,
@@ -89,9 +83,10 @@ class _CabinetState extends State<Cabinet> {
               ),
             ));
           } else {
+             _loadHistory = false;
             _resultWidget = Center(
               child: Text(
-                'Будь ласка, активуйте преміум, якщо\nхочете переглядати історію',
+                'Будь ласка, активуйте преміум,\nякщо хочете переглядати історію',
                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.w300),
               ),
             );
@@ -195,7 +190,7 @@ class _CabinetState extends State<Cabinet> {
                         ),
                       ),
                     ),
-                    snapshot.hasData ? HistoryBlocks(snapshot.data): _resultWidget,
+                    _loadHistory ? HistoryBlocks(snapshot.data): _resultWidget,
                     Padding(padding: EdgeInsets.only(bottom: 15)),
                   ],
                 ),
