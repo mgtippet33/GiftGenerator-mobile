@@ -4,4 +4,5 @@ class ApiConstants {
   static String getUser_url = 'http://127.0.0.1:8000/api/profile/';
   static String changeUser_url = 'http://127.0.0.1:8000/change_fields/';
   static String searchGifts_url = 'http://127.0.0.1:8000/search/';
+  static String getHistory_url = 'http://127.0.0.1:8000/get_history/';
 }
