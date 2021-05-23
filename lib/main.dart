@@ -4,10 +4,14 @@ import 'package:gift_generator/blocs/auth_bloc.dart';
 import 'package:gift_generator/pages/account/cabinet.dart';
 import 'package:gift_generator/themeModel.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  SharedPreferences.getInstance().then((prefs) {
+    prefs.setBool('isAllNotificationsRead', false);
+  });
   runApp(ChangeNotifierProvider(
     create: (BuildContext context) => ThemeModel(),
     child: MyApp(),
