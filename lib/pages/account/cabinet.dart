@@ -13,9 +13,13 @@ import 'package:gift_generator/pages/authorization/loginPage.dart';
 import 'package:gift_generator/pages/payment/payment.dart';
 import 'package:gift_generator/pages/search/find.dart';
 import 'package:gift_generator/pages/account/setting.dart';
+import 'package:gift_generator/themeModel.dart';
+import 'package:gift_generator/themes/lightTheme.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../navigation.dart';
@@ -36,6 +40,7 @@ class _CabinetState extends State<Cabinet> {
   Widget _resultWidget;
   String _userName = "";
   bool _loadHistory;
+
 
   Future<File> getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -68,16 +73,18 @@ class _CabinetState extends State<Cabinet> {
               _resultWidget = Center(
                 child: Text(
                   'Швидше за все,ви ще не шукали подарунки!',
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w300),
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w300,
+                    color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff111323) : Color(0xffffffff),
+                  ),
                 ),
               );
-            }
-            else{
+            } else {
               _loadHistory = true;
             }
-          }
-           else if (_isPremium && !snapshot.hasData) {
-             _loadHistory = false;
+          } else if (_isPremium && !snapshot.hasData) {
+            _loadHistory = false;
             _resultWidget = Center(
                 child: SizedBox(
               width: 50,
@@ -89,17 +96,28 @@ class _CabinetState extends State<Cabinet> {
               ),
             ));
           } else {
-             _loadHistory = false;
+            _loadHistory = false;
             _resultWidget = Center(
               child: Text(
                 'Будь ласка, активуйте преміум,\nякщо хочете переглядати історію',
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w300),
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w300,
+                  color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff111323) : Color(0xffffffff),
+                ),
               ),
             );
           }
           return Scaffold(
-            appBar: AppBar(
+            backgroundColor : Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffffffff) : Color(0xff111323),
+            appBar: NewGradientAppBar(
               automaticallyImplyLeading: false,
+              gradient:
+                  Provider.of<ThemeModel>(context).currentTheme == lightTheme
+                      ? LinearGradient(
+                          colors: [Color(0xffAFCDFA), Color(0xffAEE3FA)])
+                      : LinearGradient(
+                          colors: [Color(0xff234983), Color(0xff4B81C3)]),
               title: IconTitleWidget(),
             ),
             body: Container(
@@ -120,8 +138,12 @@ class _CabinetState extends State<Cabinet> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(50)),
                                 color: _isPremium == true
-                                    ? Colors.deepOrangeAccent
-                                    : Colors.white,
+                                    ? Provider.of<ThemeModel>(context).currentTheme == lightTheme
+                                        ? Colors.deepOrangeAccent
+                                        : Colors.cyan
+                                    : Provider.of<ThemeModel>(context).currentTheme == lightTheme
+                                        ? Colors.white
+                                        : Color(0xff111323),
                               ),
                               child: Padding(
                                 padding: EdgeInsets.only(top:5),
@@ -135,7 +157,11 @@ class _CabinetState extends State<Cabinet> {
                             Text(
                               _userName,
                               style: TextStyle(
-                                  fontWeight: FontWeight.w400, fontSize: 18),
+                                  color: Provider.of<ThemeModel>(context).currentTheme == lightTheme
+                                      ? Color(0xff1D1C1C)
+                                      : Color(0xffCBCBCD),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 18),
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
@@ -145,7 +171,9 @@ class _CabinetState extends State<Cabinet> {
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 35, vertical: 7),
                                     shadowColor: Colors.black,
-                                    primary: Colors.white,
+                                    primary: Provider.of<ThemeModel>(context).currentTheme == lightTheme
+                                        ? Color(0xffffffff)
+                                        : Color(0xff353535),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             new BorderRadius.circular(10.0))),
@@ -169,7 +197,9 @@ class _CabinetState extends State<Cabinet> {
                                     padding: EdgeInsets.only(left:10),
                                     child: Text(
                                       'Преміум акаунт',
-                                      style: TextStyle(color: Colors.black54),
+                                      style: TextStyle(color: color: Provider.of<ThemeModel>(context).currentTheme == lightTheme
+                                          ? Color(0xff111323)
+                                          : Color(0xffffffff)),
                                     ),
                                   ),
                                 ]),
@@ -185,7 +215,9 @@ class _CabinetState extends State<Cabinet> {
                               EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                           shadowColor: Colors.white,
                           elevation: 0,
-                          primary: Colors.white,
+                          primary: Provider.of<ThemeModel>(context).currentTheme == lightTheme
+                              ? Color(0xffffffff)
+                              : Color(0xff111323),
                           shape: RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(50.0))),
                       onPressed: () => getImage(),
@@ -197,12 +229,14 @@ class _CabinetState extends State<Cabinet> {
                           "Історія",
                           style: new TextStyle(
                             fontSize: 20.0,
-                            color: Colors.black54,
+                            color: Provider.of<ThemeModel>(context).currentTheme == lightTheme
+                                ? Color(0xff111323)
+                                : Color(0xffffffff),
                           ),
                         ),
                       ),
                     ),
-                    _loadHistory ? HistoryBlocks(snapshot.data): _resultWidget,
+                    _loadHistory ? HistoryBlocks(snapshot.data) : _resultWidget,
                     Padding(padding: EdgeInsets.only(bottom: 15)),
                   ],
                 ),
@@ -239,8 +273,7 @@ class _CabinetState extends State<Cabinet> {
           });
         }
       });
-    }
-    else if(UserHandler.instance.getUser() != null) {
+    } else if (UserHandler.instance.getUser() != null) {
       _setCurrentUser(UserHandler.instance.getUser());
     }
   }
@@ -273,21 +306,26 @@ class IconTitleWidget extends StatelessWidget {
               context,
               PageTransition(
                   type: PageTransitionType.fade, child: SettingPage())),
-          child: Icon(Icons.settings, color: const Color(0xff6d6b6b), size: 30),
+          child: Icon(Icons.settings, color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff6d6b6b) : Color(0xffAEE3FA), size: 30),
         ),
         SizedBox(
           width: 10,
         ),
-        Text('Кабінет'),
+        Text(
+            'Кабінет',
+          style: TextStyle(
+            color : Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
+            fontWeight: FontWeight.w400,
+          ),
+        ),
         SizedBox(
           width: 10,
         ),
         InkWell(
-          // onTap: ()=> Navigator.push(context,PageTransition(
-          //     type: PageTransitionType.fade,
-          //     child: NotificationPage())),
-          child: Icon(Icons.nightlight_round,
-              color: const Color(0xff6d6b6b), size: 30),
+          onTap: () =>
+              {Provider.of<ThemeModel>(context, listen: false).toggleTheme()},
+          child: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Icon(Icons.nightlight_round,
+              color: const Color(0xff6d6b6b), size: 30) : Icon(Icons.wb_sunny, color: const Color(0xffE5E5E5), size: 30),
         ),
       ],
     );

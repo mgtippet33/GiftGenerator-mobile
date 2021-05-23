@@ -6,6 +6,9 @@ import 'package:gift_generator/models/User.dart' as myUser;
 import 'package:gift_generator/models/UserHandler.dart';
 import 'package:gift_generator/pages/authorization/loginPage.dart';
 import 'package:gift_generator/services/validator.dart';
+import 'package:gift_generator/themeModel.dart';
+import 'package:gift_generator/themes/lightTheme.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,11 +43,18 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     final authBloc = Provider.of<AuthBloc>(context);
     return Scaffold(
-      appBar: AppBar(
+      backgroundColor : Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffffffff) : Color(0xff111323),
+      appBar: NewGradientAppBar(
+        gradient: Provider.of<ThemeModel>(context).currentTheme == lightTheme
+            ? LinearGradient(
+            colors: [Color(0xffAFCDFA), Color(0xffAEE3FA)])
+            : LinearGradient(
+            colors: [Color(0xff234983), Color(0xff4B81C3)]),
         title: SettingAppBar(),
       ),
       body: _settingPage(_user, context),
       bottomNavigationBar: BottomAppBar(
+        color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffffffff) : Color(0xff111323),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -60,7 +70,7 @@ class _SettingPageState extends State<SettingPage> {
             ),
             IconButton(
               icon:
-                  Icon(Icons.logout, color: const Color(0xff000000), size: 30),
+                  Icon(Icons.logout, color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff000000) : Color(0xff43ADE9), size: 30),
               onPressed: () async {
                 var user = UserHandler.instance.getUser();
                 if (user.googleSignIn) {
@@ -191,7 +201,7 @@ class _SettingPageState extends State<SettingPage> {
                 height: _profileValidate ? 355 : 310,
                 width: 375.0,
                 decoration: BoxDecoration(
-                  color: Color(0xFFFFEFE9),
+                  color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFFFFEFE9) : Color(0xff2E163D),
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
@@ -332,7 +342,7 @@ class _SettingPageState extends State<SettingPage> {
                 height: _passwordValidate ? 365 : 310,
                 width: 375.0,
                 decoration: BoxDecoration(
-                  color: Color(0xFFFFEFE9),
+                  color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFFEAF9FF) : Color(0xff113331),
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
@@ -389,14 +399,19 @@ class SettingAppBar extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Text('Налаштування'),
+          child: Text(
+              'Налаштування',
+            style: TextStyle(
+              color : Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xff1D1C1C) : Color(0xffE5E5E5),
+              fontWeight: FontWeight.w400
+            ),
+          ),
         ),
         InkWell(
-          // onTap: ()=> Navigator.push(context,PageTransition(
-          //     type: PageTrоansitionType.fade,
-          //     child: NotificationPage())),
-          child: Icon(Icons.nightlight_round,
-              color: const Color(0xff6d6b6b), size: 30),
+          onTap: () =>
+          {Provider.of<ThemeModel>(context, listen: false).toggleTheme()},
+          child: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Icon(Icons.nightlight_round,
+              color: const Color(0xff6d6b6b), size: 30) : Icon(Icons.wb_sunny, color: const Color(0xffE5E5E5), size: 30),
         ),
       ],
     );

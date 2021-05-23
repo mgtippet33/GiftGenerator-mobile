@@ -20,5 +20,6 @@ class ThemeModel extends ChangeNotifier {
       _themeType = ThemeType.Dark;
       return notifyListeners();
     }
+    print(currentTheme);
   }
 }

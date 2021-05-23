@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:gift_generator/pages/account/cabinet.dart';
 import 'package:gift_generator/pages/account/notification.dart';
 import 'package:gift_generator/pages/search/find.dart';
+import 'package:gift_generator/themeModel.dart';
+import 'package:gift_generator/themes/lightTheme.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 import 'account/notification.dart';
 
@@ -32,6 +36,7 @@ class _StatefulBarState extends State<NavigationBar> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return BottomNavigationBar(
+        backgroundColor: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffffffff) : Color(0xff272C4F),
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.card_giftcard,
