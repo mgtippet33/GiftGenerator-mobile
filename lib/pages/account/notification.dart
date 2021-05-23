@@ -7,7 +7,12 @@ import 'package:gift_generator/models/Notification.dart';
 import 'package:gift_generator/models/NotificationHandler.dart';
 import 'package:gift_generator/models/User.dart';
 import 'package:gift_generator/models/UserHandler.dart';
+import 'package:gift_generator/pages/account/setting.dart';
 import 'package:gift_generator/pages/navigation.dart';
+import 'package:gift_generator/themeModel.dart';
+import 'package:gift_generator/themes/lightTheme.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationPage extends StatefulWidget {
@@ -48,7 +53,13 @@ class _StatefulNotificationState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     _checkNotification(_notifications);
     return Scaffold(
-      appBar: AppBar(
+      backgroundColor : Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffffffff) : Color(0xff111323),
+      appBar: NewGradientAppBar(
+        gradient: Provider.of<ThemeModel>(context).currentTheme == lightTheme
+            ? LinearGradient(
+            colors: [Color(0xffAFCDFA), Color(0xffAEE3FA)])
+            : LinearGradient(
+            colors: [Color(0xff234983), Color(0xff4B81C3)]),
         title: Text("Повідомлення"),
         centerTitle: true,
       ),
@@ -92,8 +103,8 @@ class _StatefulNotificationState extends State<NotificationPage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     color: holidays[index].isRead == false
-                        ? Color(0xffE8FAC3)
-                        : Color(0xffC3CCFA),
+                        ? Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffE8FAC3) : Color(0xff113331)
+                        : Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffC3CCFA) : Color(0xff2E163D),
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
@@ -113,7 +124,7 @@ class _StatefulNotificationState extends State<NotificationPage> {
                                       BorderRadius.all(Radius.circular(50)),
                                   color: holidays[index].isRead == true
                                       ? Color(0xffFA6F38)
-                                      : Color(0xffE8FAC3),
+                                      : Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffE8FAC3) : Color(0xff113331)
                                 ),
                               ),
                             ),
