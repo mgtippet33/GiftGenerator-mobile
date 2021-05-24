@@ -194,40 +194,26 @@ class _resultPageState extends State<resultPage> {
                             color: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xFF000000) : Color(0xFFE5E5E5))),
                   ),
                   onPressed: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          if(k==0 || k==1){
-                            firstPage(
-                                age: widget.age.toString(),
-                                sex: widget.sex,
-                                link: widget.link);
-                          } else if(k==2){
-                            resultPage(
-                                age: widget.age,
-                                sex: widget.sex,
-                                link: widget.link,
-                                holiday: widget.holiday,
-                                list: widget.list,
-                                chose: widget.chose,
-                                line: widget.line);
-                          }
-                        }
-                            // : resultPage(
-                            // age: widget.age,
-                            // sex: widget.sex,
-                            // link: widget.link,
-                            // holiday: widget.holiday,
-                            // list: widget.list,
-                            // chose: minusChose(widget.chose),
-                            // line: widget.line),
-                      ),
-                    );
                     if (k==3)
                     {
-                      Navigator.pop(context);
                       launch('https://giftgeneratorapp.herokuapp.com/');
+                    }else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                          k < 2 ? firstPage(
+                              age: widget.age.toString(),
+                              sex: widget.sex,
+                              link: widget.link)
+                              : resultPage(
+                              age: widget.age,
+                              sex: widget.sex,
+                              link: widget.link,
+                              holiday: widget.holiday,
+                              list: widget.list,
+                              chose: widget.chose,
+                              line: widget.line),),);
                     }
                   },
                 ),
@@ -425,7 +411,9 @@ class _resultPageState extends State<resultPage> {
               ),
             );
           } else {
-            _resultWidget =  Center(
+            _resultWidget =  Padding(
+              padding: EdgeInsets.only(top:40),
+              child: Center(
                 child: SizedBox(width: 100,
                   height: 100,
                   child: CircularProgressIndicator(
@@ -434,7 +422,8 @@ class _resultPageState extends State<resultPage> {
                     valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
                   ),
                 ),
-              );
+              ),
+            );
           }
           return Scaffold(
             backgroundColor:
@@ -451,23 +440,23 @@ class _resultPageState extends State<resultPage> {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
+                  // Padding(
+                  //   padding: EdgeInsets.only(left: 10, right: 60),
+                  //   child: InkWell(
+                  //     onTap: () {
+                  //       _showDialog(0);
+                  //     },
+                  //     child: Icon(Icons.arrow_back_rounded,
+                  //         color:
+                  //             Provider.of<ThemeModel>(context).currentTheme ==
+                  //                     lightTheme
+                  //                 ? Color(0xff6d6b6b)
+                  //                 : Color(0xffffffff),
+                  //         size: 30),
+                  //   ),
+                  // ),
                   Padding(
-                    padding: EdgeInsets.only(left: 10, right: 60),
-                    child: InkWell(
-                      onTap: () {
-                        _showDialog(0);
-                      },
-                      child: Icon(Icons.arrow_back_rounded,
-                          color:
-                              Provider.of<ThemeModel>(context).currentTheme ==
-                                      lightTheme
-                                  ? Color(0xff6d6b6b)
-                                  : Color(0xffffffff),
-                          size: 30),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 90),
+                    padding: EdgeInsets.only(left: 90, right: 90),
                     child: Text('Пошук подарунку'),
                   ),
                 ],

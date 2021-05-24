@@ -84,7 +84,7 @@ class _firstPageState extends State<firstPage> {
                     child:ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 5),
+                            horizontal: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? 20 : 13, vertical: 5),
                         shadowColor: Colors.grey,
                         primary: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffc3ccfa) : Color(0xff151050),
                         shape: RoundedRectangleBorder(
@@ -131,7 +131,7 @@ class _firstPageState extends State<firstPage> {
                     child:ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 5),
+                            horizontal: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? 20 : 18, vertical: 5),
                         shadowColor: Colors.grey,
                         primary: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xffe8fac3) : Color(0xff113331),
                         shape: RoundedRectangleBorder(
@@ -179,7 +179,7 @@ class _firstPageState extends State<firstPage> {
                     child:ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 5),
+                            horizontal: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? 20 : 20, vertical: 5),
                         shadowColor: Colors.grey,
                         primary: Provider.of<ThemeModel>(context).currentTheme == lightTheme ? Color(0xfffad7c3) : Color(0xff2E163D),
                         shape: RoundedRectangleBorder(

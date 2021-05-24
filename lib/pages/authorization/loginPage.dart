@@ -227,7 +227,7 @@ class _MyStatefulLoginPageWidgetState extends State<LoginPage> {
                                             type: PageTransitionType.fade,
                                             child: Registration()));
                                   },
-                                  child: const Text('РЕЄСТАРЦІЯ'),
+                                  child: const Text('РЕЄСТРАЦІЯ'),
                                 ),
                               )
                             ],
