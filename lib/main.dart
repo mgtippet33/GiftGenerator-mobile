@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
     return Provider(
       create: (context) => AuthBloc(),
       child: MaterialApp(
-        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        title: 'GiftGenerator',
         theme: Provider.of<ThemeModel>(context).currentTheme,
         home: Cabinet(),
       ),
